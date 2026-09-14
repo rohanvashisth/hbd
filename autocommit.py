@@ -65,6 +65,10 @@ def main():
                     push_code, push_out, push_err = run_cmd(push_args)
                     if push_code == 0:
                         print("[Auto-Commit] Successfully pushed changes to GitHub remote.", flush=True)
+                        # Also keep gh-pages branch in sync for instant GitHub Pages hosting
+                        sync_code, _, _ = run_cmd(["git", "push", "origin", f"{branch}:gh-pages"])
+                        if sync_code == 0:
+                            print("[Auto-Commit] Successfully updated origin/gh-pages.", flush=True)
                     else:
                         print(f"[Auto-Commit] Push to remote failed: {push_err}", file=sys.stderr, flush=True)
                 else:
