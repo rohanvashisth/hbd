@@ -1,11 +1,9 @@
 // =========================================================
 // Configuration file for Barbie's Birthday Website
-// You can edit any of the text, memories, or settings below!
 // =========================================================
 
 const CONFIG = {
   // Gatekeeper unlock settings (case-insensitive)
-  // "nono" is the secret passcode, and "barbie" also supported
   allowedNames: ["nono", "nono!", "barbie", "barbie!"],
   friendName: "Barbie",
   nickname: "Barbie",
@@ -29,7 +27,7 @@ const CONFIG = {
   },
 
   // Interactive Photo Memories with Click-to-Read Messages
-  // You can easily drop your photos into 'assets/images/' or use image URLs!
+  // Drop your pictures in assets/images/ and update below!
   memories: [
     {
       id: 1,
@@ -87,12 +85,11 @@ const CONFIG = {
     "Genuinely one of a kind! 🌟"
   ],
 
-  // Music Settings
+  // Soft Music Settings: YouTube Video ID: iLfWmakK8R8 (Gallan 4 Karaoke)
   music: {
-    softVolume: 0.08, // Soft gentle background volume (0.0 to 1.0)
-    autoPlayOnUnlock: true,
-    // If you have a local mp3, place it in assets/music.mp3 and set the path below:
-    customAudioUrl: "" // e.g. "assets/soft-piano-birthday.mp3"
+    youtubeVideoId: "iLfWmakK8R8",
+    softVolume: 20, // Soft gentle volume percentage (20%)
+    autoPlayOnUnlock: true
   }
 };
 
