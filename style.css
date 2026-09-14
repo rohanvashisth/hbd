@@ -1,0 +1,667 @@
+/* ==========================================================================
+   Birthday Celebration Stylesheet for Nono
+   ========================================================================== */
+
+:root {
+  --primary: #ff4081;
+  --primary-glow: rgba(255, 64, 129, 0.4);
+  --secondary: #7c4dff;
+  --accent-gold: #ffd700;
+  --bg-dark: #0d0e15;
+  --card-bg: rgba(26, 27, 38, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-dark);
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(255, 64, 129, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 85% 80%, rgba(124, 77, 255, 0.18) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.08) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* ==========================================================================
+   Lockscreen Entrance Stage
+   ========================================================================== */
+#lockscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1a1528 0%, #09090f 100%);
+  padding: 1.5rem;
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+}
+
+#lockscreen.unlocked {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.lock-card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(24, 23, 37, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 64, 129, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.lock-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff4081, #ffd700, #7c4dff);
+}
+
+.lock-avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 64, 129, 0.2), rgba(124, 77, 255, 0.2));
+  border: 2px dashed rgba(255, 215, 0, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  animation: pulse-glow 3s infinite alternate;
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 64, 129, 0.4); }
+  100% { transform: scale(1.06); box-shadow: 0 0 25px 8px rgba(255, 64, 129, 0.2); }
+}
+
+.lock-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #fff 30%, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lock-subtitle {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.lock-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  font-size: 1.15rem;
+  background: rgba(15, 15, 26, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  color: #fff;
+  text-align: center;
+  outline: none;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.lock-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+  background: rgba(20, 20, 35, 0.95);
+}
+
+.lock-input::placeholder {
+  color: #64748b;
+  font-weight: 400;
+  letter-spacing: normal;
+}
+
+.unlock-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #ff4081, #7c4dff);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 64, 129, 0.35);
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.unlock-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 64, 129, 0.5);
+  filter: brightness(1.1);
+}
+
+.unlock-btn:active {
+  transform: translateY(0);
+}
+
+.error-msg {
+  min-height: 24px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fb7185;
+  transition: all 0.3s;
+}
+
+/* Shake Animation */
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+/* ==========================================================================
+   Main Party Experience
+   ========================================================================== */
+#main-stage {
+  opacity: 0;
+  transition: opacity 1s ease;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+#main-stage.visible {
+  opacity: 1;
+}
+
+/* Music Player Floating Badge */
+.music-toggle {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  background: rgba(26, 27, 38, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  color: #ffd700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.music-toggle:hover {
+  transform: scale(1.05);
+  background: rgba(35, 36, 50, 0.9);
+}
+
+.music-playing .music-icon {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Hero Celebration Section */
+.hero-section {
+  text-align: center;
+  padding: 4.5rem 1.5rem 3rem;
+  position: relative;
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  color: #ffd700;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.bday-title {
+  font-family: 'Playfair Display', 'Poppins', serif;
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #fff 20%, #ff77a9 50%, #ffd700 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 15px rgba(255, 64, 129, 0.3));
+}
+
+.bday-subtitle {
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  color: #cbd5e1;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Confetti Trigger Button */
+.confetti-blast-btn {
+  margin-top: 1.8rem;
+  background: linear-gradient(135deg, #ffd700, #ff4081);
+  color: #1a1528;
+  font-weight: 700;
+  padding: 0.75rem 1.75rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.confetti-blast-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 6px 25px rgba(255, 215, 0, 0.6);
+}
+
+/* ==========================================================================
+   Interactive Birthday Cake
+   ========================================================================== */
+.cake-section {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.cake-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2.5rem 1.5rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cake-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.cake-hint {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+/* Cake CSS Construction */
+.cake-container {
+  width: 250px;
+  height: 220px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.candles-row {
+  display: flex;
+  gap: 22px;
+  margin-bottom: -5px;
+  z-index: 10;
+}
+
+.candle {
+  width: 14px;
+  height: 52px;
+  background: repeating-linear-gradient(45deg, #ffd700, #ffd700 6px, #ff4081 6px, #ff4081 12px);
+  border-radius: 5px 5px 0 0;
+  position: relative;
+}
+
+.flame {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 24px;
+  background: radial-gradient(ellipse at bottom, #fff 10%, #ffeb3b 40%, #ff5722 85%);
+  border-radius: 50% 50% 35% 35%;
+  box-shadow: 0 0 18px 4px rgba(255, 152, 0, 0.7);
+  animation: flicker 0.9s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@keyframes flicker {
+  0% { transform: translateX(-50%) rotate(-3deg) scaleY(1); }
+  50% { transform: translateX(-50%) rotate(3deg) scaleY(1.1); }
+  100% { transform: translateX(-50%) rotate(-1deg) scaleY(0.95); }
+}
+
+.flame.blown-out {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px) scale(0.2);
+}
+
+.cake-tier-top {
+  width: 160px;
+  height: 50px;
+  background: linear-gradient(180deg, #ff80ab, #f06292);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  border-top: 5px solid #fff;
+}
+
+.cake-tier-bottom {
+  width: 220px;
+  height: 65px;
+  background: linear-gradient(180deg, #ba68c8, #ab47bc);
+  border-radius: 12px 12px 0 0;
+  position: relative;
+  border-top: 6px solid #fff;
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.15);
+}
+
+.cake-plate {
+  width: 260px;
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.blow-status {
+  font-weight: 600;
+  color: #ffd700;
+  min-height: 24px;
+}
+
+/* ==========================================================================
+   Memory Lane (Polaroid Wall)
+   ========================================================================== */
+.memories-section {
+  max-width: 1000px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-heading h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.section-heading p {
+  color: #94a3b8;
+  margin-top: 0.4rem;
+}
+
+.polaroid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.polaroid-card {
+  background: #fff;
+  padding: 12px 12px 20px;
+  border-radius: 4px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 260px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.polaroid-card:nth-child(even) {
+  transform: rotate(2.5deg);
+}
+
+.polaroid-card:nth-child(odd) {
+  transform: rotate(-2.5deg);
+}
+
+.polaroid-card:hover {
+  transform: rotate(0deg) scale(1.07) translateY(-8px);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 22px;
+  background: rgba(255, 235, 160, 0.7);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-left: 2px dashed rgba(0, 0, 0, 0.1);
+  border-right: 2px dashed rgba(0, 0, 0, 0.1);
+}
+
+.polaroid-img-wrapper {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #f1f5f9;
+  border-radius: 2px;
+}
+
+.polaroid-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.polaroid-card:hover img {
+  transform: scale(1.05);
+}
+
+.polaroid-caption {
+  font-family: 'Caveat', 'Comic Sans MS', cursive, sans-serif;
+  color: #1e293b;
+  font-size: 1.25rem;
+  margin-top: 12px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.polaroid-date {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Letter from Rohan
+   ========================================================================== */
+.letter-section {
+  max-width: 680px;
+  margin: 3.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.letter-envelope {
+  background: linear-gradient(135deg, rgba(30, 27, 46, 0.9), rgba(20, 19, 32, 0.9));
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.letter-badge {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.letter-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffd700;
+  margin-bottom: 1.5rem;
+}
+
+.letter-content {
+  color: #e2e8f0;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.letter-content p {
+  margin-bottom: 1.25rem;
+}
+
+.letter-signoff {
+  margin-top: 2rem;
+  text-align: right;
+  font-style: italic;
+  color: #ff80ab;
+}
+
+.letter-signoff span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  display: block;
+}
+
+/* ==========================================================================
+   Balloon Pop Mini-Game
+   ========================================================================== */
+.balloon-game-section {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.balloon-play-area {
+  min-height: 280px;
+  background: rgba(18, 17, 30, 0.6);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 2rem 1rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.floating-balloon {
+  width: 65px;
+  height: 80px;
+  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+  position: relative;
+  cursor: pointer;
+  box-shadow: inset -5px -5px 12px rgba(0,0,0,0.2), 0 8px 20px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+  animation: float-bob 3s ease-in-out infinite alternate;
+}
+
+.floating-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.floating-balloon:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+@keyframes float-bob {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-15px); }
+}
+
+.pop-toast {
+  margin-top: 1.5rem;
+  min-height: 32px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffd700;
+  transition: all 0.3s ease;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 1rem 1rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #ff4081;
+  text-decoration: none;
+}
