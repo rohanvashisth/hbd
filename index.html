@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday! 🎂✨</title>
+  <title>Happy Birthday, Barbie! 💖🎂</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -51,15 +51,15 @@
        ====================================================================== -->
   <div id="main-stage">
     
-    <!-- Floating Music Controller -->
+    <!-- Floating Soft Music Controller -->
     <button id="music-toggle" class="music-toggle" aria-label="Toggle background music">
-      <span class="music-icon">🎵</span> Music: Ready
+      <span class="music-icon">🎵</span> <span id="music-status-text">Soft Music: Ready</span>
     </button>
 
     <!-- Hero Section -->
     <header class="hero-section">
       <div class="badge-tag">VIP Birthday Celebration</div>
-      <h1 id="bday-title" class="bday-title">Happy Birthday, Nono!</h1>
+      <h1 id="bday-title" class="bday-title">Happy Birthday, Barbie!</h1>
       <p id="bday-subtitle" class="bday-subtitle">Today is all about celebrating the most awesome person ever! 🎂✨</p>
       
       <div>
@@ -90,11 +90,11 @@
       </div>
     </section>
 
-    <!-- Memory Lane: Polaroid Wall -->
+    <!-- Memory Lane: Polaroid Wall with Click-to-Read Messages -->
     <section class="memories-section">
       <div class="section-heading">
         <h2>Memory Lane 📸</h2>
-        <p>A few unforgettable moments and smiling memories</p>
+        <p>Click any photo to reveal the special message behind it! 💌</p>
       </div>
 
       <div id="polaroid-grid" class="polaroid-grid">
@@ -106,7 +106,7 @@
     <section class="letter-section">
       <div class="letter-envelope">
         <div class="letter-badge">💌</div>
-        <h2 id="letter-title" class="letter-title">A Special Letter for You</h2>
+        <h2 id="letter-title" class="letter-title">A Special Letter for Barbie</h2>
         <div class="letter-content">
           <p id="letter-salutation" style="font-weight: 600; color: #ffd700;"></p>
           <div id="letter-body"></div>
@@ -119,7 +119,7 @@
     <section class="balloon-game-section">
       <div class="section-heading">
         <h2>Pop the Balloons! 🎈</h2>
-        <p>Pop each balloon to reveal reasons why you're awesome</p>
+        <p>Pop each balloon to reveal why Barbie is so special</p>
       </div>
 
       <div id="balloon-area" class="balloon-play-area">
@@ -131,9 +131,45 @@
 
     <!-- Footer -->
     <footer>
-      <p>Crafted with lots of ❤️ for Nono's Birthday Celebration</p>
+      <p>Crafted with lots of ❤️ for Barbie's Birthday Celebration</p>
     </footer>
 
+  </div>
+
+  <!-- ======================================================================
+       STAGE 3: Interactive Photo Lightbox & Story Modal
+       ====================================================================== -->
+  <div id="photo-modal" class="photo-modal" aria-hidden="true">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">✕</button>
+
+      <div class="modal-layout">
+        <!-- Photo Side -->
+        <div class="modal-image-container">
+          <img id="modal-img" src="" alt="Memory Photo" />
+          <div class="modal-date-badge" id="modal-date">Date</div>
+        </div>
+
+        <!-- Message Side -->
+        <div class="modal-text-container">
+          <div class="modal-tag">A Memory with Barbie 🌸</div>
+          <h3 class="modal-caption" id="modal-caption">Caption</h3>
+          <div class="modal-divider"></div>
+          <div class="modal-message-box">
+            <span class="quote-icon">“</span>
+            <p id="modal-message" class="modal-message-text">Message goes here...</p>
+          </div>
+
+          <!-- Navigation Controls -->
+          <div class="modal-nav-bar">
+            <button class="nav-btn" id="modal-prev-btn">‹ Previous</button>
+            <span class="nav-counter" id="modal-counter">1 of 6</span>
+            <button class="nav-btn" id="modal-next-btn">Next ›</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->
