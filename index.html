@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎂✨</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ======================================================================
+       STAGE 1: Gatekeeper / Mystery Name Lockscreen
+       ====================================================================== -->
+  <div id="lockscreen">
+    <div class="lock-card">
+      <div class="lock-avatar">🎁</div>
+      <h1 class="lock-title">A Secret Surprise</h1>
+      <p class="lock-subtitle">Please identify yourself to enter the celebration</p>
+
+      <div class="input-container">
+        <input 
+          type="text" 
+          id="name-input" 
+          class="lock-input" 
+          placeholder="Enter your name..." 
+          autocomplete="off"
+          autofocus
+        />
+      </div>
+
+      <button id="unlock-btn" class="unlock-btn">
+        <span>Unlock My Surprise</span> ✨
+      </button>
+
+      <div id="error-msg" class="error-msg"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       STAGE 2: Full Birthday Celebration Experience
+       ====================================================================== -->
+  <div id="main-stage">
+    
+    <!-- Floating Music Controller -->
+    <button id="music-toggle" class="music-toggle" aria-label="Toggle background music">
+      <span class="music-icon">🎵</span> Music: Ready
+    </button>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+      <div class="badge-tag">VIP Birthday Celebration</div>
+      <h1 id="bday-title" class="bday-title">Happy Birthday, Nono!</h1>
+      <p id="bday-subtitle" class="bday-subtitle">Today is all about celebrating the most awesome person ever! 🎂✨</p>
+      
+      <div>
+        <button id="confetti-blast-btn" class="confetti-blast-btn">
+          <span>More Confetti!</span> 🎊
+        </button>
+      </div>
+    </header>
+
+    <!-- Interactive Birthday Cake & Candles -->
+    <section class="cake-section">
+      <div class="cake-card">
+        <h2 class="cake-title">Make a Wish! 🎂</h2>
+        <p class="cake-hint">Click on the candles or cake to blow them out</p>
+
+        <div id="cake-container" class="cake-container" title="Click to blow out the candles!">
+          <div class="candles-row">
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+          </div>
+          <div class="cake-tier-top"></div>
+          <div class="cake-tier-bottom"></div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <div id="blow-status" class="blow-status">Take a deep breath and blow! 🕯️</div>
+      </div>
+    </section>
+
+    <!-- Memory Lane: Polaroid Wall -->
+    <section class="memories-section">
+      <div class="section-heading">
+        <h2>Memory Lane 📸</h2>
+        <p>A few unforgettable moments and smiling memories</p>
+      </div>
+
+      <div id="polaroid-grid" class="polaroid-grid">
+        <!-- Injected dynamically from config.js -->
+      </div>
+    </section>
+
+    <!-- Letter Section -->
+    <section class="letter-section">
+      <div class="letter-envelope">
+        <div class="letter-badge">💌</div>
+        <h2 id="letter-title" class="letter-title">A Special Letter for You</h2>
+        <div class="letter-content">
+          <p id="letter-salutation" style="font-weight: 600; color: #ffd700;"></p>
+          <div id="letter-body"></div>
+          <div id="letter-signoff" class="letter-signoff"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Balloon Pop Playground -->
+    <section class="balloon-game-section">
+      <div class="section-heading">
+        <h2>Pop the Balloons! 🎈</h2>
+        <p>Pop each balloon to reveal reasons why you're awesome</p>
+      </div>
+
+      <div id="balloon-area" class="balloon-play-area">
+        <!-- Injected dynamically from script.js -->
+      </div>
+
+      <div id="pop-toast" class="pop-toast">Click any balloon above to pop it!</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>Crafted with lots of ❤️ for Nono's Birthday Celebration</p>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
