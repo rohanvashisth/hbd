@@ -1,5 +1,5 @@
 // ==========================================================================
-// Birthday Celebration Interactive Logic
+// Birthday Celebration Interactive Logic for Barbie
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,27 +11,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const errorMsg = document.getElementById('error-msg');
   const mainStage = document.getElementById('main-stage');
   const musicToggle = document.getElementById('music-toggle');
+  const musicStatusText = document.getElementById('music-status-text');
   const confettiBlastBtn = document.getElementById('confetti-blast-btn');
 
-  // Populate dynamic content from CONFIG
+  // Photo Modal Elements
+  const photoModal = document.getElementById('photo-modal');
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalCloseBtn = document.getElementById('modal-close-btn');
+  const modalImg = document.getElementById('modal-img');
+  const modalCaption = document.getElementById('modal-caption');
+  const modalDate = document.getElementById('modal-date');
+  const modalMessage = document.getElementById('modal-message');
+  const modalCounter = document.getElementById('modal-counter');
+  const modalPrevBtn = document.getElementById('modal-prev-btn');
+  const modalNextBtn = document.getElementById('modal-next-btn');
+
+  let currentMemoryIndex = 0;
+
+  // Initialize and populate dynamic content from CONFIG
   setupConfigContent();
 
   // --------------------------------------------------------------------------
   // Gatekeeper: Name Verification
   // --------------------------------------------------------------------------
   const wrongNameMessages = [
-    "Nope! Only Nono holds the VIP pass today! 🧐",
+    "Nope! Only Barbie holds the VIP pass today! 🧐",
     "Nice try! Who are you really? 😉",
-    "Access denied! Hint: It's a 4-letter magic name ✨",
+    "Access denied! Hint: Try typing 'nono' or 'barbie' ✨",
     "Hmm, that's not what the birthday scroll says! 📜",
-    "Close, but not quite! Try typing 'nono' 🎈"
+    "Close, but not quite! Give it another shot 🎈"
   ];
 
   function verifyName() {
     const rawValue = nameInput.value || '';
     const cleanValue = rawValue.trim().toLowerCase();
 
-    // Check if entered name is in allowed list (case-insensitive)
+    // Check against allowed names list (case-insensitive)
     const isMatch = CONFIG.allowedNames.some(name => name.trim().toLowerCase() === cleanValue);
 
     if (isMatch) {
@@ -42,13 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleFailedUnlock() {
-    // Trigger shake animation
     lockCard.classList.remove('shake');
     void lockCard.offsetWidth; // Force reflow
     lockCard.classList.add('shake');
 
-    // Pick random playful error message
     const randomMsg = wrongNameMessages[Math.floor(Math.random() * wrongNameMessages.length)];
+    errorMsg.style.color = '#fb7185';
     errorMsg.textContent = randomMsg;
     nameInput.focus();
     nameInput.select();
@@ -56,17 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function handleSuccessUnlock() {
     errorMsg.style.color = '#4ade80';
-    errorMsg.textContent = "Identity verified! Opening party gates... 🎉";
+    errorMsg.textContent = "Identity verified! Welcome Barbie! 🎉";
     nameInput.disabled = true;
     unlockBtn.disabled = true;
 
-    // Massive confetti cannon
+    // Massive celebratory confetti cannon
     fireMassiveConfetti();
 
-    // Start background birthday melody
-    playMelody();
+    // Start gentle, soft background music
+    startSoftBackgroundMusic();
 
-    // Transition smoothly to the main stage
+    // Smooth transition into the main celebration stage
     setTimeout(() => {
       lockscreen.classList.add('unlocked');
       mainStage.classList.add('visible');
@@ -90,12 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let blownCount = 0;
 
   cakeContainer.addEventListener('click', (e) => {
-    // If user clicked a specific candle flame
     const flameEl = e.target.closest('.flame');
     if (flameEl && !flameEl.classList.contains('blown-out')) {
       extinguishFlame(flameEl);
     } else {
-      // Blow out all remaining flames
       flames.forEach(flame => {
         if (!flame.classList.contains('blown-out')) {
           extinguishFlame(flame);
@@ -107,14 +119,58 @@ document.addEventListener('DOMContentLoaded', () => {
   function extinguishFlame(flame) {
     flame.classList.add('blown-out');
     blownCount++;
-    playPopSound(800);
+    playSoftPopSound(800);
 
     if (blownCount >= flames.length) {
-      blowStatus.innerHTML = "✨ Make a wish, Nono! May all your dreams come true! 🎂✨";
+      blowStatus.innerHTML = `✨ Make a wish, ${CONFIG.friendName}! May all your dreams come true! 🎂✨`;
       fireHeartConfetti();
-      playCheerTune();
+      playSoftCheerTune();
     }
   }
+
+  // --------------------------------------------------------------------------
+  // Interactive Photo Modal & Story Lightbox
+  // --------------------------------------------------------------------------
+  function openPhotoModal(index) {
+    if (!CONFIG.memories || CONFIG.memories.length === 0) return;
+    
+    currentMemoryIndex = (index + CONFIG.memories.length) % CONFIG.memories.length;
+    const item = CONFIG.memories[currentMemoryIndex];
+
+    modalImg.src = item.image;
+    modalCaption.textContent = item.caption || "Special Memory";
+    modalDate.textContent = item.date || "Memory";
+    modalMessage.textContent = item.message || "Thinking of you on your special day!";
+    modalCounter.textContent = `${currentMemoryIndex + 1} of ${CONFIG.memories.length}`;
+
+    photoModal.classList.add('active');
+    photoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  }
+
+  function closePhotoModal() {
+    photoModal.classList.remove('active');
+    photoModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  modalCloseBtn.addEventListener('click', closePhotoModal);
+  modalOverlay.addEventListener('click', closePhotoModal);
+
+  modalPrevBtn.addEventListener('click', () => {
+    openPhotoModal(currentMemoryIndex - 1);
+  });
+
+  modalNextBtn.addEventListener('click', () => {
+    openPhotoModal(currentMemoryIndex + 1);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!photoModal.classList.contains('active')) return;
+    if (e.key === 'Escape') closePhotoModal();
+    if (e.key === 'ArrowLeft') openPhotoModal(currentMemoryIndex - 1);
+    if (e.key === 'ArrowRight') openPhotoModal(currentMemoryIndex + 1);
+  });
 
   // --------------------------------------------------------------------------
   // Balloon Pop Mini-Game
@@ -133,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       balloon.style.animationDelay = `${(index * 0.35).toFixed(2)}s`;
 
       balloon.addEventListener('click', () => {
-        playPopSound(550 + index * 60);
+        playSoftPopSound(550 + index * 50);
         fireBalloonPopConfetti(balloon);
         popToast.textContent = `🎈 "${compliment}"`;
         balloon.style.transform = 'scale(1.4)';
@@ -148,10 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
   spawnBalloons();
 
   // --------------------------------------------------------------------------
-  // Web Audio API Synthesizer (No external broken audio links)
+  // Soft, Soothing Background Music (Web Audio API Synthesizer)
   // --------------------------------------------------------------------------
   let audioCtx = null;
   let isPlayingMusic = false;
+  let musicLoopTimer = null;
 
   function initAudio() {
     if (!audioCtx) {
@@ -162,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function playPopSound(freq = 600) {
+  function playSoftPopSound(freq = 600) {
     try {
       initAudio();
       const osc = audioCtx.createOscillator();
@@ -170,62 +227,92 @@ document.addEventListener('DOMContentLoaded', () => {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.start();
       osc.stop(audioCtx.currentTime + 0.13);
-    } catch (e) {
-      // Audio context policy fallback
-    }
+    } catch (e) {}
   }
 
-  // Happy Birthday Chime Notes (C4, D4, etc.)
+  // Soft Music Box Frequencies (Gentle High Octave)
   const notes = {
     C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
+    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25, D5: 587.33
   };
 
-  const melody = [
-    { note: notes.C4, dur: 0.3 }, { note: notes.C4, dur: 0.2 }, { note: notes.D4, dur: 0.5 },
-    { note: notes.C4, dur: 0.5 }, { note: notes.F4, dur: 0.5 }, { note: notes.E4, dur: 0.9 },
-    { note: notes.C4, dur: 0.3 }, { note: notes.C4, dur: 0.2 }, { note: notes.D4, dur: 0.5 },
-    { note: notes.C4, dur: 0.5 }, { note: notes.G4, dur: 0.5 }, { note: notes.F4, dur: 0.9 },
-    { note: notes.C4, dur: 0.3 }, { note: notes.C4, dur: 0.2 }, { note: notes.C5, dur: 0.5 },
-    { note: notes.A4, dur: 0.5 }, { note: notes.F4, dur: 0.5 }, { note: notes.E4, dur: 0.5 }, { note: notes.D4, dur: 0.7 }
+  const softBirthdayMelody = [
+    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.D4, dur: 0.6 },
+    { note: notes.C4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 1.1 },
+    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.D4, dur: 0.6 },
+    { note: notes.C4, dur: 0.6 }, { note: notes.G4, dur: 0.6 }, { note: notes.F4, dur: 1.1 },
+    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.C5, dur: 0.6 },
+    { note: notes.A4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 0.6 }, { note: notes.D4, dur: 0.9 },
+    { note: notes.B4, dur: 0.35 }, { note: notes.B4, dur: 0.25 }, { note: notes.A4, dur: 0.6 },
+    { note: notes.F4, dur: 0.6 }, { note: notes.G4, dur: 0.6 }, { note: notes.F4, dur: 1.4 }
   ];
 
-  function playMelody() {
+  function playSoftMelodySequence() {
+    if (!isPlayingMusic) return;
+    initAudio();
+
+    const softVolume = (CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 0.08;
+    let curTime = audioCtx.currentTime + 0.1;
+    let totalDuration = 0;
+
+    softBirthdayMelody.forEach(item => {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      // Sine wave creates a gentle, warm, soothing music-box tone
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(item.note, curTime);
+
+      // Gentle attack and soft decay to avoid harsh clicks
+      gain.gain.setValueAtTime(0.0001, curTime);
+      gain.gain.exponentialRampToValueAtTime(softVolume, curTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, curTime + item.dur - 0.02);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(curTime);
+      osc.stop(curTime + item.dur);
+
+      curTime += item.dur;
+      totalDuration += item.dur;
+    });
+
+    // Loop softly after a brief soothing pause
+    if (musicLoopTimer) clearTimeout(musicLoopTimer);
+    musicLoopTimer = setTimeout(() => {
+      if (isPlayingMusic) {
+        playSoftMelodySequence();
+      }
+    }, (totalDuration + 2.5) * 1000);
+  }
+
+  function startSoftBackgroundMusic() {
     try {
       initAudio();
       isPlayingMusic = true;
       musicToggle.classList.add('music-playing');
-      musicToggle.innerHTML = `<span class="music-icon">🎵</span> Music: Playing`;
-
-      let curTime = audioCtx.currentTime + 0.1;
-      melody.forEach(item => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(item.note, curTime);
-
-        gain.gain.setValueAtTime(0.18, curTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, curTime + item.dur - 0.05);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start(curTime);
-        osc.stop(curTime + item.dur);
-        curTime += item.dur;
-      });
+      musicStatusText.textContent = "Soft Music: Playing 🌸";
+      playSoftMelodySequence();
     } catch (e) {
-      console.log("Audio play blocked by browser policy until interaction");
+      console.log("Audio autoplay prevented by browser policy until gesture");
     }
   }
 
-  function playCheerTune() {
+  function stopSoftBackgroundMusic() {
+    isPlayingMusic = false;
+    musicToggle.classList.remove('music-playing');
+    musicStatusText.textContent = "Soft Music: Off 🔇";
+    if (musicLoopTimer) clearTimeout(musicLoopTimer);
+  }
+
+  function playSoftCheerTune() {
     try {
       initAudio();
       const chordNotes = [notes.C4, notes.E4, notes.G4, notes.C5];
@@ -234,8 +321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const gain = audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.1);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+        gain.gain.setValueAtTime(0.09, audioCtx.currentTime + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(audioCtx.currentTime + i * 0.1);
@@ -246,12 +333,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   musicToggle.addEventListener('click', () => {
     if (isPlayingMusic) {
-      isPlayingMusic = false;
-      musicToggle.classList.remove('music-playing');
-      musicToggle.innerHTML = `<span class="music-icon">🔇</span> Music: Off`;
-      if (audioCtx) audioCtx.suspend();
+      stopSoftBackgroundMusic();
     } else {
-      playMelody();
+      startSoftBackgroundMusic();
     }
   });
 
@@ -261,9 +345,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function fireMassiveConfetti() {
     if (typeof confetti !== 'function') return;
 
-    // Side cannons
     const end = Date.now() + 2.5 * 1000;
-    const colors = ['#ff4081', '#ffd700', '#7c4dff', '#ffffff'];
+    const colors = ['#ff4081', '#ffd700', '#7c4dff', '#ffffff', '#ff80ab'];
 
     (function frame() {
       confetti({
@@ -319,14 +402,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Populate HTML from CONFIG
   // --------------------------------------------------------------------------
   function setupConfigContent() {
-    // Title and Subtitle
     const titleEl = document.getElementById('bday-title');
     if (titleEl) titleEl.textContent = CONFIG.birthdayTitle;
 
     const subtitleEl = document.getElementById('bday-subtitle');
     if (subtitleEl) subtitleEl.textContent = CONFIG.subtitle;
 
-    // Letter
     const letterTitle = document.getElementById('letter-title');
     if (letterTitle) letterTitle.textContent = CONFIG.letter.title;
 
@@ -343,19 +424,30 @@ document.addEventListener('DOMContentLoaded', () => {
       letterSignoff.innerHTML = `${CONFIG.letter.signoff} <span>${CONFIG.letter.sender}</span>`;
     }
 
-    // Memories Polaroid Grid
+    // Render Polaroid Cards with Click-to-Read Feature
     const polaroidGrid = document.getElementById('polaroid-grid');
     if (polaroidGrid && CONFIG.memories) {
-      polaroidGrid.innerHTML = CONFIG.memories.map(mem => `
-        <div class="polaroid-card">
+      polaroidGrid.innerHTML = CONFIG.memories.map((mem, index) => `
+        <div class="polaroid-card" data-index="${index}" title="Click to read Barbie's special note 💌">
           <div class="tape"></div>
           <div class="polaroid-img-wrapper">
             <img src="${mem.image}" alt="${mem.caption}" loading="lazy" />
           </div>
           <div class="polaroid-caption">${mem.caption}</div>
-          <div class="polaroid-date">${mem.date}</div>
+          <div class="polaroid-footer">
+            <span class="polaroid-date">${mem.date}</span>
+            <span class="polaroid-click-hint">Read note 💌</span>
+          </div>
         </div>
       `).join('');
+
+      // Add click listener to each polaroid card
+      polaroidGrid.querySelectorAll('.polaroid-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const index = parseInt(card.getAttribute('data-index'), 10);
+          openPhotoModal(index);
+        });
+      });
     }
   }
 });
