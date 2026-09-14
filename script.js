@@ -2,6 +2,44 @@
 // Birthday Celebration Interactive Logic for Barbie
 // ==========================================================================
 
+// YouTube Player Instance
+let ytPlayer = null;
+let isYtReady = false;
+
+window.onYouTubeIframeAPIReady = function() {
+  const videoId = (window.CONFIG && CONFIG.music && CONFIG.music.youtubeVideoId) ? CONFIG.music.youtubeVideoId : 'iLfWmakK8R8';
+  const softVol = (window.CONFIG && CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 20;
+
+  try {
+    ytPlayer = new YT.Player('yt-player', {
+      height: '100',
+      width: '100',
+      videoId: videoId,
+      playerVars: {
+        autoplay: 0,
+        controls: 0,
+        disablekb: 1,
+        fs: 0,
+        loop: 1,
+        playlist: videoId,
+        playsinline: 1,
+        rel: 0
+      },
+      events: {
+        onReady: function(event) {
+          isYtReady = true;
+          event.target.setVolume(softVol); // Soft background volume
+        },
+        onError: function(err) {
+          console.log("YouTube Player notice: will fallback to soft ambient synth", err);
+        }
+      }
+    });
+  } catch (e) {
+    console.log("YouTube API init error, fallback active", e);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const lockscreen = document.getElementById('lockscreen');
@@ -34,14 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   // Gatekeeper: Name Verification
   // --------------------------------------------------------------------------
-  const wrongNameMessages = [
-    "Nope! Only Barbie holds the VIP pass today! 🧐",
-    "Nice try! Who are you really? 😉",
-    "Access denied! Hint: Try typing 'nono' or 'barbie' ✨",
-    "Hmm, that's not what the birthday scroll says! 📜",
-    "Close, but not quite! Give it another shot 🎈"
-  ];
-
   function verifyName() {
     const rawValue = nameInput.value || '';
     const cleanValue = rawValue.trim().toLowerCase();
@@ -61,31 +91,28 @@ document.addEventListener('DOMContentLoaded', () => {
     void lockCard.offsetWidth; // Force reflow
     lockCard.classList.add('shake');
 
-    const randomMsg = wrongNameMessages[Math.floor(Math.random() * wrongNameMessages.length)];
-    errorMsg.style.color = '#fb7185';
-    errorMsg.textContent = randomMsg;
+    errorMsg.textContent = "incorrect name";
     nameInput.focus();
     nameInput.select();
   }
 
   function handleSuccessUnlock() {
-    errorMsg.style.color = '#4ade80';
-    errorMsg.textContent = "Identity verified! Welcome Barbie! 🎉";
+    errorMsg.textContent = "";
     nameInput.disabled = true;
     unlockBtn.disabled = true;
 
+    // Start soft YouTube background music immediately on user gesture
+    startSoftBackgroundMusic();
+
     // Massive celebratory confetti cannon
     fireMassiveConfetti();
-
-    // Start gentle, soft background music
-    startSoftBackgroundMusic();
 
     // Smooth transition into the main celebration stage
     setTimeout(() => {
       lockscreen.classList.add('unlocked');
       mainStage.classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 900);
+    }, 700);
   }
 
   unlockBtn.addEventListener('click', verifyName);
@@ -145,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     photoModal.classList.add('active');
     photoModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
   }
 
   function closePhotoModal() {
@@ -204,11 +231,61 @@ document.addEventListener('DOMContentLoaded', () => {
   spawnBalloons();
 
   // --------------------------------------------------------------------------
-  // Soft, Soothing Background Music (Web Audio API Synthesizer)
+  // Soft Music Control: YouTube Track (Gallan 4 Karaoke) + Synth Fallback
   // --------------------------------------------------------------------------
-  let audioCtx = null;
   let isPlayingMusic = false;
-  let musicLoopTimer = null;
+
+  function startSoftBackgroundMusic() {
+    isPlayingMusic = true;
+    musicToggle.classList.add('music-playing');
+    musicStatusText.textContent = "Soft Music: Playing 🌸";
+
+    const softVol = (CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 20;
+
+    if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+      try {
+        ytPlayer.setVolume(softVol);
+        ytPlayer.playVideo();
+      } catch (e) {
+        console.log("YouTube play retry", e);
+      }
+    } else {
+      // If YouTube is still initializing, attempt after brief delay or use fallback
+      setTimeout(() => {
+        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
+          ytPlayer.setVolume(softVol);
+          ytPlayer.playVideo();
+        } else {
+          startSoftMelodySequence();
+        }
+      }, 800);
+    }
+  }
+
+  function pauseSoftBackgroundMusic() {
+    isPlayingMusic = false;
+    musicToggle.classList.remove('music-playing');
+    musicStatusText.textContent = "Soft Music: Paused 🔇";
+
+    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+      try {
+        ytPlayer.pauseVideo();
+      } catch (e) {}
+    }
+    stopSoftMelodySequence();
+  }
+
+  musicToggle.addEventListener('click', () => {
+    if (isPlayingMusic) {
+      pauseSoftBackgroundMusic();
+    } else {
+      startSoftBackgroundMusic();
+    }
+  });
+
+  // Soft Web Audio API Synthesizer (Fallback and Sound Effects)
+  let audioCtx = null;
+  let synthLoopTimer = null;
 
   function initAudio() {
     if (!audioCtx) {
@@ -227,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -236,47 +313,33 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {}
   }
 
-  // Soft Music Box Frequencies (Gentle High Octave)
   const notes = {
     C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25, D5: 587.33
+    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
   };
 
-  const softBirthdayMelody = [
+  const softMelodyNotes = [
     { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.D4, dur: 0.6 },
-    { note: notes.C4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 1.1 },
-    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.D4, dur: 0.6 },
-    { note: notes.C4, dur: 0.6 }, { note: notes.G4, dur: 0.6 }, { note: notes.F4, dur: 1.1 },
-    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.C5, dur: 0.6 },
-    { note: notes.A4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 0.6 }, { note: notes.D4, dur: 0.9 },
-    { note: notes.B4, dur: 0.35 }, { note: notes.B4, dur: 0.25 }, { note: notes.A4, dur: 0.6 },
-    { note: notes.F4, dur: 0.6 }, { note: notes.G4, dur: 0.6 }, { note: notes.F4, dur: 1.4 }
+    { note: notes.C4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 1.1 }
   ];
 
-  function playSoftMelodySequence() {
-    if (!isPlayingMusic) return;
+  function startSoftMelodySequence() {
     initAudio();
-
-    const softVolume = (CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 0.08;
     let curTime = audioCtx.currentTime + 0.1;
     let totalDuration = 0;
 
-    softBirthdayMelody.forEach(item => {
+    softMelodyNotes.forEach(item => {
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-
-      // Sine wave creates a gentle, warm, soothing music-box tone
       osc.type = 'sine';
       osc.frequency.setValueAtTime(item.note, curTime);
 
-      // Gentle attack and soft decay to avoid harsh clicks
       gain.gain.setValueAtTime(0.0001, curTime);
-      gain.gain.exponentialRampToValueAtTime(softVolume, curTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.06, curTime + 0.05);
       gain.gain.exponentialRampToValueAtTime(0.0001, curTime + item.dur - 0.02);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
-
       osc.start(curTime);
       osc.stop(curTime + item.dur);
 
@@ -284,32 +347,16 @@ document.addEventListener('DOMContentLoaded', () => {
       totalDuration += item.dur;
     });
 
-    // Loop softly after a brief soothing pause
-    if (musicLoopTimer) clearTimeout(musicLoopTimer);
-    musicLoopTimer = setTimeout(() => {
-      if (isPlayingMusic) {
-        playSoftMelodySequence();
+    if (synthLoopTimer) clearTimeout(synthLoopTimer);
+    synthLoopTimer = setTimeout(() => {
+      if (isPlayingMusic && (!ytPlayer || ytPlayer.getPlayerState() !== 1)) {
+        startSoftMelodySequence();
       }
     }, (totalDuration + 2.5) * 1000);
   }
 
-  function startSoftBackgroundMusic() {
-    try {
-      initAudio();
-      isPlayingMusic = true;
-      musicToggle.classList.add('music-playing');
-      musicStatusText.textContent = "Soft Music: Playing 🌸";
-      playSoftMelodySequence();
-    } catch (e) {
-      console.log("Audio autoplay prevented by browser policy until gesture");
-    }
-  }
-
-  function stopSoftBackgroundMusic() {
-    isPlayingMusic = false;
-    musicToggle.classList.remove('music-playing');
-    musicStatusText.textContent = "Soft Music: Off 🔇";
-    if (musicLoopTimer) clearTimeout(musicLoopTimer);
+  function stopSoftMelodySequence() {
+    if (synthLoopTimer) clearTimeout(synthLoopTimer);
   }
 
   function playSoftCheerTune() {
@@ -321,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gain = audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.1);
-        gain.gain.setValueAtTime(0.09, audioCtx.currentTime + i * 0.1);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime + i * 0.1);
         gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -330,14 +377,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (e) {}
   }
-
-  musicToggle.addEventListener('click', () => {
-    if (isPlayingMusic) {
-      stopSoftBackgroundMusic();
-    } else {
-      startSoftBackgroundMusic();
-    }
-  });
 
   // --------------------------------------------------------------------------
   // Canvas Confetti Effects
@@ -424,7 +463,6 @@ document.addEventListener('DOMContentLoaded', () => {
       letterSignoff.innerHTML = `${CONFIG.letter.signoff} <span>${CONFIG.letter.sender}</span>`;
     }
 
-    // Render Polaroid Cards with Click-to-Read Feature
     const polaroidGrid = document.getElementById('polaroid-grid');
     if (polaroidGrid && CONFIG.memories) {
       polaroidGrid.innerHTML = CONFIG.memories.map((mem, index) => `
@@ -441,7 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `).join('');
 
-      // Add click listener to each polaroid card
       polaroidGrid.querySelectorAll('.polaroid-card').forEach(card => {
         card.addEventListener('click', () => {
           const index = parseInt(card.getAttribute('data-index'), 10);
