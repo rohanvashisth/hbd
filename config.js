@@ -85,10 +85,10 @@ const CONFIG = {
     "Genuinely one of a kind! 🌟"
   ],
 
-  // Soft Music Settings: YouTube Video ID: iLfWmakK8R8 (Gallan 4 Karaoke)
+  // Soft Background Music Settings
   music: {
-    youtubeVideoId: "iLfWmakK8R8",
-    softVolume: 20, // Soft gentle volume percentage (20%)
+    audioUrl: "Music/Gallan%204%20Karaoke.mp3",
+    softVolume: 0.2, // 20% soft gentle volume
     autoPlayOnUnlock: true
   }
 };
