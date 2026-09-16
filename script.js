@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const targetDateStr = (CONFIG.countdown && CONFIG.countdown.targetTime) 
       ? CONFIG.countdown.targetTime 
-      : "2026-09-20T00:00:00-04:00"; // 12 AM Sept 20th Eastern Time (EDT)
+      : "2026-09-20T00:00:00-05:00"; // 12 AM Sept 20th Central Time (CDT / Austin time)
     const targetDate = new Date(targetDateStr).getTime();
 
     if (countdownLabel && CONFIG.countdown && CONFIG.countdown.label) {
