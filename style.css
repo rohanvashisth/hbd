@@ -346,39 +346,39 @@ body {
 }
 
 .bg-slide.active {
-  opacity: 0.38;
+  opacity: 0.68;
   transform: scale(1.07);
 }
 
 .bg-slideshow-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 25%, rgba(8, 9, 13, 0.45) 0%, rgba(8, 9, 13, 0.8) 75%, #08090d 100%);
+  background: radial-gradient(circle at 50% 30%, rgba(8, 9, 13, 0.22) 0%, rgba(8, 9, 13, 0.52) 80%, rgba(8, 9, 13, 0.75) 100%);
   pointer-events: none;
 }
 
 /* ==========================================================================
-   Letter Section (Translucent Frosted Card)
+   Letter Section (Transparent Glass Card for Phone Screens)
    ========================================================================== */
 .letter-section {
-  max-width: 680px;
-  margin: 3.5rem auto;
-  padding: 0 1.25rem;
+  max-width: min(92vw, 620px);
+  margin: 2.25rem auto;
+  padding: 0 0.5rem;
 }
 
 .letter-envelope {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+  background: rgba(10, 12, 18, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 18px;
-  padding: 2.25rem 1.75rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  padding: 2.2rem 1.4rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
 }
 
 @media (min-width: 600px) {
   .letter-envelope {
-    padding: 3rem 2.5rem;
+    padding: 2.75rem 2.25rem;
   }
 }
 
@@ -390,16 +390,17 @@ body {
 
 .letter-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.6rem, 4vw, 1.95rem);
+  font-size: clamp(1.6rem, 4.5vw, 2rem);
   font-weight: 600;
   text-align: center;
   color: var(--gold-light);
   margin-bottom: 1.5rem;
   letter-spacing: 0.3px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
 }
 
 .letter-content {
-  color: var(--text-secondary);
+  color: #f1f5f9;
   font-size: 0.98rem;
   line-height: 1.8;
   font-weight: 300;
@@ -410,11 +411,13 @@ body {
   font-weight: 600;
   color: var(--gold-accent);
   font-size: 1.25rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
 .letter-content p {
   margin-bottom: 1.25rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.85);
 }
 
 .letter-signoff {
@@ -422,6 +425,7 @@ body {
   text-align: right;
   font-style: italic;
   color: var(--gold-light);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
 .letter-signoff span {
@@ -432,6 +436,7 @@ body {
   display: block;
   font-style: normal;
   margin-top: 2px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95);
 }
 
 /* ==========================================================================
