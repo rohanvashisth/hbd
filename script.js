@@ -167,22 +167,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   const balloonArea = document.getElementById('balloon-area');
   const popToast = document.getElementById('pop-toast');
-  const balloonColors = ['#ff4081', '#7c4dff', '#ffd700', '#00e5ff', '#ff5252', '#69f0ae', '#ff9100'];
+  const orbGradients = [
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(212, 175, 55, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(224, 159, 175, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(180, 205, 235, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(230, 215, 180, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)'
+  ];
 
   function spawnBalloons() {
     balloonArea.innerHTML = '';
     CONFIG.balloonCompliments.forEach((compliment, index) => {
       const balloon = document.createElement('div');
       balloon.className = 'floating-balloon';
-      const color = balloonColors[index % balloonColors.length];
-      balloon.style.backgroundColor = color;
+      const gradient = orbGradients[index % orbGradients.length];
+      balloon.style.background = gradient;
       balloon.style.animationDelay = `${(index * 0.35).toFixed(2)}s`;
 
       balloon.addEventListener('click', () => {
         playSoftPopSound(550 + index * 50);
         fireBalloonPopConfetti(balloon);
-        popToast.textContent = `🎈 "${compliment}"`;
-        balloon.style.transform = 'scale(1.4)';
+        popToast.textContent = `✨ "${compliment}"`;
+        balloon.style.transform = 'scale(1.35)';
         balloon.style.opacity = '0';
         setTimeout(() => balloon.remove(), 250);
       });
@@ -292,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof confetti !== 'function') return;
 
     const end = Date.now() + 2.5 * 1000;
-    const colors = ['#ff4081', '#ffd700', '#7c4dff', '#ffffff', '#ff80ab'];
+    const colors = ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf', '#ffffff'];
 
     (function frame() {
       confetti({
@@ -322,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
       particleCount: 80,
       spread: 100,
       origin: { y: 0.6 },
-      colors: ['#ff4081', '#ffd700', '#ff80ab', '#ffffff']
+      colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf', '#ffffff']
     });
   }
 
@@ -333,10 +338,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const y = (rect.top + rect.height / 2) / window.innerHeight;
 
     confetti({
-      particleCount: 30,
+      particleCount: 25,
       spread: 60,
       origin: { x, y },
-      colors: ['#ff4081', '#ffd700', '#00e5ff']
+      colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf']
     });
   }
 
