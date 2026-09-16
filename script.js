@@ -2,44 +2,6 @@
 // Birthday Celebration Interactive Logic for Barbie
 // ==========================================================================
 
-// YouTube Player Instance
-let ytPlayer = null;
-let isYtReady = false;
-
-window.onYouTubeIframeAPIReady = function() {
-  const videoId = (window.CONFIG && CONFIG.music && CONFIG.music.youtubeVideoId) ? CONFIG.music.youtubeVideoId : 'iLfWmakK8R8';
-  const softVol = (window.CONFIG && CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 20;
-
-  try {
-    ytPlayer = new YT.Player('yt-player', {
-      height: '100',
-      width: '100',
-      videoId: videoId,
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        disablekb: 1,
-        fs: 0,
-        loop: 1,
-        playlist: videoId,
-        playsinline: 1,
-        rel: 0
-      },
-      events: {
-        onReady: function(event) {
-          isYtReady = true;
-          event.target.setVolume(softVol); // Soft background volume
-        },
-        onError: function(err) {
-          console.log("YouTube Player notice: will fallback to soft ambient synth", err);
-        }
-      }
-    });
-  } catch (e) {
-    console.log("YouTube API init error, fallback active", e);
-  }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const lockscreen = document.getElementById('lockscreen');
@@ -51,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const musicToggle = document.getElementById('music-toggle');
   const musicStatusText = document.getElementById('music-status-text');
   const confettiBlastBtn = document.getElementById('confetti-blast-btn');
+  const bgAudio = document.getElementById('bg-audio');
 
   // Photo Modal Elements
   const photoModal = document.getElementById('photo-modal');
@@ -231,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
   spawnBalloons();
 
   // --------------------------------------------------------------------------
-  // Soft Music Control: YouTube Track (Gallan 4 Karaoke) + Synth Fallback
+  // Soft Music Control: Local MP3 Track (Gallan 4 Karaoke)
   // --------------------------------------------------------------------------
   let isPlayingMusic = false;
 
@@ -240,25 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
     musicToggle.classList.add('music-playing');
     musicStatusText.textContent = "Soft Music: Playing 🌸";
 
-    const softVol = (CONFIG.music && CONFIG.music.softVolume) ? CONFIG.music.softVolume : 20;
-
-    if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-      try {
-        ytPlayer.setVolume(softVol);
-        ytPlayer.playVideo();
-      } catch (e) {
-        console.log("YouTube play retry", e);
+    if (bgAudio) {
+      bgAudio.volume = (CONFIG.music && CONFIG.music.softVolume !== undefined) ? CONFIG.music.softVolume : 0.2;
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.log("Audio playback note:", err);
+        });
       }
-    } else {
-      // If YouTube is still initializing, attempt after brief delay or use fallback
-      setTimeout(() => {
-        if (ytPlayer && typeof ytPlayer.playVideo === 'function') {
-          ytPlayer.setVolume(softVol);
-          ytPlayer.playVideo();
-        } else {
-          startSoftMelodySequence();
-        }
-      }, 800);
     }
   }
 
@@ -267,12 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
     musicToggle.classList.remove('music-playing');
     musicStatusText.textContent = "Soft Music: Paused 🔇";
 
-    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-      try {
-        ytPlayer.pauseVideo();
-      } catch (e) {}
+    if (bgAudio) {
+      bgAudio.pause();
     }
-    stopSoftMelodySequence();
   }
 
   musicToggle.addEventListener('click', () => {
@@ -283,9 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Soft Web Audio API Synthesizer (Fallback and Sound Effects)
+  // Web Audio API Synthesizer (for Balloon Pop & Candle Blow sound effects)
   let audioCtx = null;
-  let synthLoopTimer = null;
 
   function initAudio() {
     if (!audioCtx) {
@@ -317,47 +265,6 @@ document.addEventListener('DOMContentLoaded', () => {
     C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
     G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
   };
-
-  const softMelodyNotes = [
-    { note: notes.C4, dur: 0.35 }, { note: notes.C4, dur: 0.25 }, { note: notes.D4, dur: 0.6 },
-    { note: notes.C4, dur: 0.6 }, { note: notes.F4, dur: 0.6 }, { note: notes.E4, dur: 1.1 }
-  ];
-
-  function startSoftMelodySequence() {
-    initAudio();
-    let curTime = audioCtx.currentTime + 0.1;
-    let totalDuration = 0;
-
-    softMelodyNotes.forEach(item => {
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(item.note, curTime);
-
-      gain.gain.setValueAtTime(0.0001, curTime);
-      gain.gain.exponentialRampToValueAtTime(0.06, curTime + 0.05);
-      gain.gain.exponentialRampToValueAtTime(0.0001, curTime + item.dur - 0.02);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start(curTime);
-      osc.stop(curTime + item.dur);
-
-      curTime += item.dur;
-      totalDuration += item.dur;
-    });
-
-    if (synthLoopTimer) clearTimeout(synthLoopTimer);
-    synthLoopTimer = setTimeout(() => {
-      if (isPlayingMusic && (!ytPlayer || ytPlayer.getPlayerState() !== 1)) {
-        startSoftMelodySequence();
-      }
-    }, (totalDuration + 2.5) * 1000);
-  }
-
-  function stopSoftMelodySequence() {
-    if (synthLoopTimer) clearTimeout(synthLoopTimer);
-  }
 
   function playSoftCheerTune() {
     try {
