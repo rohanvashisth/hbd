@@ -21,6 +21,76 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgSlideA = document.getElementById('bg-slide-a');
   const bgSlideB = document.getElementById('bg-slide-b');
 
+  // Countdown Elements
+  const countdownScreen = document.getElementById('countdown-screen');
+  const cdDays = document.getElementById('cd-days');
+  const cdHours = document.getElementById('cd-hours');
+  const cdMins = document.getElementById('cd-mins');
+  const cdSecs = document.getElementById('cd-secs');
+  const countdownLabel = document.getElementById('countdown-label');
+
+  // --------------------------------------------------------------------------
+  // Stage 0: Pre-Launch Countdown Timer Controller (Sept 20, 12:00 AM EST)
+  // --------------------------------------------------------------------------
+  function setupCountdown() {
+    if (!countdownScreen) return;
+
+    // Check for developer preview bypass (?preview=true or ?test=true)
+    const urlParams = new URLSearchParams(window.location.search);
+    const isPreview = urlParams.get('preview') === 'true' || urlParams.get('test') === 'true';
+
+    if (isPreview) {
+      // Instantly remove countdown screen so you can test and view immediately
+      countdownScreen.style.display = 'none';
+      if (nameInput) nameInput.focus();
+      return;
+    }
+
+    const targetDateStr = (CONFIG.countdown && CONFIG.countdown.targetTime) 
+      ? CONFIG.countdown.targetTime 
+      : "2026-09-20T00:00:00-04:00"; // 12 AM Sept 20th Eastern Time (EDT)
+    const targetDate = new Date(targetDateStr).getTime();
+
+    if (countdownLabel && CONFIG.countdown && CONFIG.countdown.label) {
+      countdownLabel.textContent = CONFIG.countdown.label;
+    }
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        // Time arrived! Smoothly dissolve countdown screen
+        clearInterval(timerInterval);
+        countdownScreen.classList.add('unlocked');
+        setTimeout(() => {
+          countdownScreen.style.display = 'none';
+        }, 850);
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (cdDays) cdDays.textContent = String(days).padStart(2, '0');
+      if (cdHours) cdHours.textContent = String(hours).padStart(2, '0');
+      if (cdMins) cdMins.textContent = String(mins).padStart(2, '0');
+      if (cdSecs) cdSecs.textContent = String(secs).padStart(2, '0');
+    }
+
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+  }
+
+  try {
+    setupCountdown();
+  } catch (err) {
+    console.warn("Countdown setup error:", err);
+  }
+
   // Safely initialize content from CONFIG
   try {
     setupConfigContent();
