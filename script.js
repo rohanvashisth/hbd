@@ -1,5 +1,6 @@
 // ==========================================================================
 // Birthday Celebration Interactive Logic for Barbie
+// Pure Luxury Theme - Mobile Optimized - Sound Effects Removed
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -64,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
     nameInput.disabled = true;
     unlockBtn.disabled = true;
 
-    // Start soft YouTube background music immediately on user gesture
+    // Start soft background music on direct user tap
     startSoftBackgroundMusic();
 
-    // Massive celebratory confetti cannon
+    // Elegant celebratory confetti cannon
     fireMassiveConfetti();
 
     // Smooth transition into the main celebration stage
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lockscreen.classList.add('unlocked');
       mainStage.classList.add('visible');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 700);
+    }, 600);
   }
 
   unlockBtn.addEventListener('click', verifyName);
@@ -86,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Interactive Birthday Cake & Candles
+  // Interactive Birthday Cake & Candles (Sound Effects Removed)
   // --------------------------------------------------------------------------
   const cakeContainer = document.getElementById('cake-container');
   const flames = document.querySelectorAll('.flame');
@@ -109,12 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
   function extinguishFlame(flame) {
     flame.classList.add('blown-out');
     blownCount++;
-    playSoftPopSound(800);
 
     if (blownCount >= flames.length) {
       blowStatus.innerHTML = `✨ Make a wish, ${CONFIG.friendName}! May all your dreams come true! 🎂✨`;
       fireHeartConfetti();
-      playSoftCheerTune();
     }
   }
 
@@ -163,15 +162,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Balloon Pop Mini-Game
+  // Floating Orbs / Wishes (Sound Effects Removed)
   // --------------------------------------------------------------------------
   const balloonArea = document.getElementById('balloon-area');
   const popToast = document.getElementById('pop-toast');
   const orbGradients = [
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(212, 175, 55, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(224, 159, 175, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(180, 205, 235, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(230, 215, 180, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)'
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(212, 175, 55, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(224, 159, 175, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(180, 205, 235, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
+    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(230, 215, 180, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)'
   ];
 
   function spawnBalloons() {
@@ -184,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
       balloon.style.animationDelay = `${(index * 0.35).toFixed(2)}s`;
 
       balloon.addEventListener('click', () => {
-        playSoftPopSound(550 + index * 50);
         fireBalloonPopConfetti(balloon);
         popToast.textContent = `✨ "${compliment}"`;
         balloon.style.transform = 'scale(1.35)';
@@ -213,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const playPromise = bgAudio.play();
       if (playPromise !== undefined) {
         playPromise.catch(err => {
-          console.log("Audio playback note:", err);
+          console.log("Audio playback notice:", err);
         });
       }
     }
@@ -237,61 +235,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Web Audio API Synthesizer (for Balloon Pop & Candle Blow sound effects)
-  let audioCtx = null;
-
-  function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-  }
-
-  function playSoftPopSound(freq = 600) {
-    try {
-      initAudio();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.13);
-    } catch (e) {}
-  }
-
-  const notes = {
-    C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
-    G4: 392.00, A4: 440.00, B4: 493.88, C5: 523.25
-  };
-
-  function playSoftCheerTune() {
-    try {
-      initAudio();
-      const chordNotes = [notes.C4, notes.E4, notes.G4, notes.C5];
-      chordNotes.forEach((f, i) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(f, audioCtx.currentTime + i * 0.1);
-        gain.gain.setValueAtTime(0.08, audioCtx.currentTime + i * 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(audioCtx.currentTime + i * 0.1);
-        osc.stop(audioCtx.currentTime + 1.2);
-      });
-    } catch (e) {}
-  }
-
   // --------------------------------------------------------------------------
-  // Canvas Confetti Effects
+  // Canvas Confetti Effects (Champagne Gold, Ivory, Pearl & Soft Rose)
   // --------------------------------------------------------------------------
   function fireMassiveConfetti() {
     if (typeof confetti !== 'function') return;
@@ -301,16 +246,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     (function frame() {
       confetti({
-        particleCount: 5,
+        particleCount: 4,
         angle: 60,
-        spread: 55,
+        spread: 50,
         origin: { x: 0, y: 0.7 },
         colors: colors
       });
       confetti({
-        particleCount: 5,
+        particleCount: 4,
         angle: 120,
-        spread: 55,
+        spread: 50,
         origin: { x: 1, y: 0.7 },
         colors: colors
       });
@@ -324,8 +269,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function fireHeartConfetti() {
     if (typeof confetti !== 'function') return;
     confetti({
-      particleCount: 80,
-      spread: 100,
+      particleCount: 60,
+      spread: 90,
       origin: { y: 0.6 },
       colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf', '#ffffff']
     });
@@ -338,8 +283,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const y = (rect.top + rect.height / 2) / window.innerHeight;
 
     confetti({
-      particleCount: 25,
-      spread: 60,
+      particleCount: 20,
+      spread: 50,
       origin: { x, y },
       colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf']
     });
@@ -354,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   function setupConfigContent() {
     const titleEl = document.getElementById('bday-title');
-    if (titleEl) titleEl.textContent = CONFIG.birthdayTitle;
+    if (titleEl) titleEl.innerHTML = `Happy Birthday, <em>${CONFIG.friendName}</em>`;
 
     const subtitleEl = document.getElementById('bday-subtitle');
     if (subtitleEl) subtitleEl.textContent = CONFIG.subtitle;
@@ -378,8 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const polaroidGrid = document.getElementById('polaroid-grid');
     if (polaroidGrid && CONFIG.memories) {
       polaroidGrid.innerHTML = CONFIG.memories.map((mem, index) => `
-        <div class="polaroid-card" data-index="${index}" title="Click to read Barbie's special note 💌">
-          <div class="tape"></div>
+        <div class="polaroid-card" data-index="${index}" title="Tap to read Barbie's special note 💌">
           <div class="polaroid-img-wrapper">
             <img src="${mem.image}" alt="${mem.caption}" loading="lazy" />
           </div>
