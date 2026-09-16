@@ -440,192 +440,144 @@ body {
 }
 
 /* ==========================================================================
-   Interactive Floating Orbs Playground (Mobile Touch-Friendly)
+   Single Window Photo Viewer (Looping with Mobile Swipe Support)
    ========================================================================== */
-.balloon-game-section {
-  max-width: 760px;
-  margin: 3.5rem auto;
-  padding: 0 1.25rem;
-  text-align: center;
+.photo-viewer-section {
+  max-width: min(92vw, 560px);
+  margin: 2.5rem auto 3.5rem;
+  padding: 0 0.5rem;
 }
 
-.balloon-play-area {
-  min-height: 220px;
-  background: rgba(14, 16, 24, 0.45);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  padding: 2rem 1rem;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-}
-
-.floating-balloon {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  position: relative;
-  cursor: pointer;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(207, 168, 78, 0.25) 50%, rgba(20, 22, 34, 0.7) 100%);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.25);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
-  animation: float-bob 3.5s ease-in-out infinite alternate;
-  touch-action: manipulation;
-}
-
-.floating-balloon:active {
-  transform: scale(1.25);
-}
-
-@keyframes float-bob {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-12px); }
-}
-
-.pop-toast {
-  margin-top: 1.25rem;
-  min-height: 28px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--gold-light);
-  letter-spacing: 0.3px;
-  transition: all 0.3s ease;
-}
-
-/* ==========================================================================
-   Artisanal Birthday Cake (Grand Finale at the Bottom)
-   ========================================================================== */
-.cake-section {
-  max-width: 580px;
-  margin: 4rem auto 2.5rem;
-  padding: 0 1.25rem;
-  text-align: center;
-}
-
-.cake-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+.viewer-card {
+  background: rgba(10, 12, 18, 0.38);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
-  padding: 2.5rem 1.5rem 2rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  padding: 1.5rem 1rem 1.25rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  text-align: center;
 }
 
-.cake-title {
+.viewer-header {
+  margin-bottom: 1rem;
+}
+
+.viewer-title {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(1.85rem, 5vw, 2.3rem);
+  font-size: clamp(1.6rem, 4.5vw, 2.1rem);
   font-weight: 600;
   color: #ffffff;
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
 }
 
-.cake-hint {
-  font-size: 0.84rem;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  font-weight: 300;
-}
-
-.cake-container {
-  width: 240px;
-  height: 200px;
-  margin: 0 auto 1.5rem;
+.viewer-frame {
   position: relative;
+  width: 100%;
+  height: clamp(300px, 55vh, 480px);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(4, 5, 8, 0.75);
+  border: 1px solid rgba(207, 168, 78, 0.28);
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.85);
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+
+.viewer-img-container {
+  width: 100%;
+  height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+.viewer-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* displays the whole photo cleanly without cropping */
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.viewer-img-container img.fade-out {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+.viewer-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(10, 12, 18, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: all 0.2s;
+  z-index: 10;
   touch-action: manipulation;
 }
 
-.candles-row {
+.viewer-nav-btn:active {
+  background: var(--gold-accent);
+  color: #000;
+  transform: translateY(-50%) scale(0.92);
+}
+
+.prev-arrow {
+  left: 8px;
+}
+
+.next-arrow {
+  right: 8px;
+}
+
+.viewer-footer {
   display: flex;
-  gap: 24px;
-  margin-bottom: -4px;
-  z-index: 10;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding: 0 0.5rem;
 }
 
-.candle {
-  width: 9px;
-  height: 46px;
-  background: linear-gradient(180deg, #fcfbf9 0%, #cfa84e 100%);
-  border-radius: 3px 3px 0 0;
-  position: relative;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+.viewer-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  padding: 0.55rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  touch-action: manipulation;
 }
 
-.flame {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 11px;
-  height: 20px;
-  background: radial-gradient(ellipse at bottom, #ffffff 15%, #ffd700 45%, #ff7700 90%);
-  border-radius: 50% 50% 35% 35%;
-  box-shadow: 0 0 15px 4px rgba(255, 180, 50, 0.65);
-  animation: flicker 0.9s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: bottom center;
-  transition: opacity 0.35s ease, transform 0.35s ease;
+.viewer-btn:active {
+  background: var(--gold-accent);
+  color: #000000;
+  border-color: var(--gold-accent);
 }
 
-@keyframes flicker {
-  0% { transform: translateX(-50%) rotate(-2deg) scaleY(1); }
-  50% { transform: translateX(-50%) rotate(2.5deg) scaleY(1.08); }
-  100% { transform: translateX(-50%) rotate(-1deg) scaleY(0.96); }
-}
-
-.flame.blown-out {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-10px) scale(0.2);
-}
-
-/* Minimalist Artisanal Cake Tiers */
-.cake-tier-top {
-  width: 145px;
-  height: 48px;
-  background: linear-gradient(180deg, #fcfbf9, #ede6da);
-  border-radius: 8px 8px 0 0;
-  position: relative;
-  border-top: 3px solid var(--gold-accent);
-  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.08);
-}
-
-.cake-tier-bottom {
-  width: 200px;
-  height: 60px;
-  background: linear-gradient(180deg, #2d262b, #1e191d);
-  border-radius: 10px 10px 0 0;
-  position: relative;
-  border-top: 3px solid var(--gold-accent);
-  box-shadow: inset 0 -6px 8px rgba(0, 0, 0, 0.25);
-}
-
-.cake-plate {
-  width: 240px;
-  height: 9px;
-  background: linear-gradient(90deg, #333945, #51596b, #333945);
-  border-radius: 8px;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
-}
-
-.blow-status {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.1rem;
+.viewer-counter {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem;
   font-weight: 500;
   color: var(--gold-light);
-  min-height: 24px;
+  letter-spacing: 1.5px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
+
 
 /* Footer */
 footer {
