@@ -1,19 +1,20 @@
 /* ==========================================================================
-   Sophisticated Birthday Celebration Stylesheet for Barbie
-   Palette: Obsidian, Champagne Gold, Warm Ivory, Frosted Glass
+   Luxury Editorial Birthday Experience for Barbie
+   Typography: Cormorant Garamond & Plus Jakarta Sans
+   Mobile-Optimized for Phone Browsers (iOS Safari & Android Chrome)
    ========================================================================== */
 
 :root {
-  --bg-dark: #090a0f;
-  --gold-accent: #d4af37;
-  --gold-glow: rgba(212, 175, 55, 0.25);
+  --bg-dark: #08090d;
+  --gold-accent: #cfa84e;
   --gold-light: #e8d08d;
-  --rose-subtle: rgba(224, 159, 175, 0.15);
-  --glass-bg: rgba(16, 18, 28, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --glass-border-hover: rgba(212, 175, 55, 0.35);
+  --gold-glow: rgba(207, 168, 78, 0.2);
+  --glass-bg: rgba(15, 17, 26, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(207, 168, 78, 0.35);
   --text-primary: #f8fafc;
-  --text-muted: #94a3b8;
+  --text-secondary: #cbd5e1;
+  --text-muted: #8e9bb0;
 }
 
 * {
@@ -23,21 +24,29 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-primary);
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(212, 175, 55, 0.05) 0%, transparent 45%),
-    radial-gradient(circle at 85% 65%, rgba(224, 159, 175, 0.04) 0%, transparent 50%),
-    radial-gradient(circle at 50% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 40%);
+    radial-gradient(circle at 20% 12%, rgba(207, 168, 78, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(224, 159, 175, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 50% 95%, rgba(207, 168, 78, 0.04) 0%, transparent 40%);
   background-attachment: fixed;
 }
 
 /* ==========================================================================
-   STAGE 1: Monochromatic Minimalist Start Page ("enter name")
+   STAGE 1: Minimalist Monochromatic Start Page ("enter name")
+   Mobile Optimized (Prevents iOS auto-zoom with 16px input)
    ========================================================================== */
 #lockscreen {
   position: fixed;
@@ -48,35 +57,37 @@ body {
   justify-content: center;
   background: #000000;
   padding: 1.5rem;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s;
 }
 
 #lockscreen.unlocked {
   opacity: 0;
-  transform: scale(1.05);
+  transform: scale(1.04);
   pointer-events: none;
   visibility: hidden;
 }
 
 .lock-card {
   width: 100%;
-  max-width: 350px;
-  background: #09090b;
+  max-width: 340px;
+  background: #0a0b0e;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  padding: 2.75rem 2rem 2.25rem;
+  padding: 2.5rem 1.75rem 2rem;
   text-align: center;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.95);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.95);
   position: relative;
 }
 
 .lock-label {
   display: block;
-  font-size: 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
   font-weight: 400;
   letter-spacing: 2.5px;
   color: rgba(255, 255, 255, 0.65);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
   text-transform: lowercase;
   user-select: none;
 }
@@ -90,8 +101,9 @@ body {
 
 .lock-input {
   width: 100%;
-  padding: 0.9rem 3.2rem 0.9rem 1.25rem;
-  font-size: 1.15rem;
+  padding: 0.85rem 3.2rem 0.85rem 1.1rem;
+  font-size: 16px; /* Prevents auto-zoom in iOS Safari */
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background: #000000;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
@@ -105,80 +117,82 @@ body {
 
 .lock-input:focus {
   border-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
 }
 
 .unlock-btn {
   position: absolute;
-  right: 7px;
-  width: 36px;
-  height: 36px;
+  right: 6px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.09);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
-.unlock-btn:hover {
+.unlock-btn:active {
   background: #ffffff;
   color: #000000;
+  transform: scale(0.95);
 }
 
 .error-msg {
-  min-height: 22px;
-  margin-top: 1.1rem;
-  font-size: 0.82rem;
+  min-height: 20px;
+  margin-top: 1rem;
+  font-size: 0.8rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.45);
   letter-spacing: 0.5px;
   transition: all 0.3s;
 }
 
-/* Shake Animation */
+/* Tactile Shake */
 .shake {
-  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.45s cubic-bezier(.36,.07,.19,.97) both;
 }
 
 @keyframes shake {
   10%, 90% { transform: translate3d(-2px, 0, 0); }
   20%, 80% { transform: translate3d(4px, 0, 0); }
-  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-  40%, 60% { transform: translate3d(6px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
+  40%, 60% { transform: translate3d(5px, 0, 0); }
 }
 
 /* ==========================================================================
-   STAGE 2: Main Party Experience
+   STAGE 2: Main Party Experience (Mobile Optimized)
    ========================================================================== */
 #main-stage {
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 0.9s ease;
   min-height: 100vh;
-  padding-bottom: 6rem;
+  padding-bottom: max(5rem, calc(4rem + env(safe-area-inset-bottom)));
 }
 
 #main-stage.visible {
   opacity: 1;
 }
 
-/* Floating Side Controls (Top Right) */
+/* Floating Side Controls (Top Right, safe on phone headers) */
 .side-controls {
   position: fixed;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
   z-index: 1000;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .side-btn {
-  background: rgba(16, 18, 28, 0.65);
+  background: rgba(14, 16, 25, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
@@ -188,22 +202,20 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
 }
 
-.side-btn:hover {
-  background: rgba(26, 29, 44, 0.85);
-  border-color: var(--gold-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+.side-btn:active {
+  transform: scale(0.92);
 }
 
 .music-toggle {
-  padding: 0.55rem 1.05rem;
-  font-size: 0.85rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  gap: 0.45rem;
+  gap: 0.4rem;
   color: var(--gold-light);
 }
 
@@ -216,7 +228,6 @@ body {
   to { transform: rotate(360deg); }
 }
 
-/* Floating Side Confetti Button (Emoji Only) */
 .confetti-btn {
   width: 40px;
   height: 40px;
@@ -224,36 +235,47 @@ body {
   padding: 0;
 }
 
-.confetti-btn:active {
-  transform: scale(0.92);
-}
-
 /* Hero Section */
 .hero-section {
   text-align: center;
-  padding: 5.5rem 1.5rem 2.5rem;
-  max-width: 800px;
+  padding: max(4.5rem, calc(3.5rem + env(safe-area-inset-top))) 1.25rem 2rem;
+  max-width: 760px;
   margin: 0 auto;
 }
 
-.bday-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
+.hero-eyebrow {
+  font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-  margin-bottom: 0.75rem;
-  background: linear-gradient(135deg, #ffffff 40%, #e5c07b 90%);
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  color: var(--gold-accent);
+  margin-bottom: 0.6rem;
+}
+
+.bday-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.3rem, 7.5vw, 4.2rem);
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(135deg, #ffffff 45%, #e8d08d 95%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 20px rgba(212, 175, 55, 0.15));
+  filter: drop-shadow(0 2px 18px rgba(207, 168, 78, 0.12));
+}
+
+.bday-title em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold-light);
 }
 
 .bday-subtitle {
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-size: clamp(0.92rem, 2.5vw, 1.1rem);
   color: var(--text-muted);
   font-weight: 300;
-  max-width: 540px;
+  max-width: 460px;
   margin: 0 auto;
   line-height: 1.6;
   letter-spacing: 0.2px;
@@ -262,73 +284,92 @@ body {
 /* Section Headings */
 .section-heading {
   text-align: center;
-  margin-bottom: 2.75rem;
+  margin-bottom: 2.25rem;
+  padding: 0 1rem;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold-accent);
+  margin-bottom: 0.35rem;
 }
 
 .section-heading h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 2rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.85rem, 5vw, 2.4rem);
   font-weight: 600;
   color: #ffffff;
-  letter-spacing: -0.2px;
+  letter-spacing: 0.5px;
 }
 
 .section-heading p {
   color: var(--text-muted);
-  margin-top: 0.4rem;
-  font-size: 0.95rem;
+  margin-top: 0.35rem;
+  font-size: 0.88rem;
   font-weight: 300;
   letter-spacing: 0.3px;
 }
 
 /* ==========================================================================
-   Memory Lane (Sleek Glass Gallery Cards)
+   Memory Lane (High-End Gallery Cards)
    ========================================================================== */
 .memories-section {
   max-width: 1100px;
-  margin: 2.5rem auto 4.5rem;
-  padding: 0 1.5rem;
+  margin: 2rem auto 3.75rem;
+  padding: 0 1.25rem;
 }
 
 .polaroid-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
   justify-items: center;
+}
+
+@media (max-width: 480px) {
+  .polaroid-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
 }
 
 .polaroid-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 12px 12px 18px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  border-radius: 14px;
+  padding: 10px 10px 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
   width: 100%;
-  max-width: 290px;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
+  max-width: 320px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
   cursor: pointer;
-  overflow: hidden;
+  touch-action: manipulation;
 }
 
-.polaroid-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--glass-border-hover);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.1);
+.polaroid-card:active {
+  transform: scale(0.98);
 }
 
-.tape {
-  display: none; /* Removed informal tape for professional design */
+@media (min-width: 768px) {
+  .polaroid-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--glass-border-hover);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(207, 168, 78, 0.08);
+  }
 }
 
 .polaroid-img-wrapper {
   width: 100%;
-  height: 250px;
+  height: 280px;
   overflow: hidden;
-  background: #0e1017;
-  border-radius: 10px;
+  background: #0d0f15;
+  border-radius: 9px;
   position: relative;
 }
 
@@ -336,24 +377,19 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: brightness(0.96);
-}
-
-.polaroid-card:hover img {
-  transform: scale(1.05);
-  filter: brightness(1.03);
+  transition: transform 0.5s ease;
+  filter: brightness(0.97);
 }
 
 .polaroid-caption {
-  font-family: 'Playfair Display', serif;
-  color: #f1f5f9;
-  font-size: 1.05rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  color: #f8fafc;
+  font-size: 1.15rem;
   font-weight: 500;
-  margin-top: 14px;
+  margin-top: 12px;
   text-align: center;
-  line-height: 1.35;
-  letter-spacing: 0.2px;
+  line-height: 1.3;
+  letter-spacing: 0.3px;
 }
 
 .polaroid-footer {
@@ -365,14 +401,14 @@ body {
 }
 
 .polaroid-date {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   font-weight: 400;
   letter-spacing: 0.5px;
 }
 
 .polaroid-click-hint {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--gold-light);
   font-weight: 500;
   display: flex;
@@ -384,67 +420,72 @@ body {
    Letter Section (Translucent Frosted Card)
    ========================================================================== */
 .letter-section {
-  max-width: 720px;
-  margin: 4.5rem auto;
-  padding: 0 1.5rem;
+  max-width: 680px;
+  margin: 3.5rem auto;
+  padding: 0 1.25rem;
 }
 
 .letter-envelope {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
-  position: relative;
+  border-radius: 18px;
+  padding: 2.25rem 1.75rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+
+@media (min-width: 600px) {
+  .letter-envelope {
+    padding: 3rem 2.5rem;
+  }
 }
 
 .letter-badge {
-  font-size: 2rem;
+  font-size: 1.85rem;
   text-align: center;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .letter-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.75rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 1.95rem);
   font-weight: 600;
   text-align: center;
   color: var(--gold-light);
-  margin-bottom: 1.75rem;
-  letter-spacing: -0.2px;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.3px;
 }
 
 .letter-content {
-  color: #cbd5e1;
-  font-size: 1.02rem;
-  line-height: 1.85;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.8;
   font-weight: 300;
 }
 
 .letter-salutation {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
   color: var(--gold-accent);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   margin-bottom: 1rem;
 }
 
 .letter-content p {
-  margin-bottom: 1.35rem;
+  margin-bottom: 1.25rem;
 }
 
 .letter-signoff {
-  margin-top: 2.25rem;
+  margin-top: 2rem;
   text-align: right;
   font-style: italic;
   color: var(--gold-light);
 }
 
 .letter-signoff span {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.25rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
   font-weight: 600;
   color: #ffffff;
   display: block;
@@ -453,60 +494,60 @@ body {
 }
 
 /* ==========================================================================
-   Interactive Balloon / Floating Spheres Playground
+   Interactive Floating Orbs Playground (Mobile Touch-Friendly)
    ========================================================================== */
 .balloon-game-section {
-  max-width: 820px;
-  margin: 4.5rem auto;
-  padding: 0 1.5rem;
+  max-width: 760px;
+  margin: 3.5rem auto;
+  padding: 0 1.25rem;
   text-align: center;
 }
 
 .balloon-play-area {
-  min-height: 260px;
+  min-height: 220px;
   background: rgba(14, 16, 24, 0.45);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 2.5rem 1.5rem;
+  border-radius: 18px;
+  padding: 2rem 1rem;
   position: relative;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.75rem;
+  gap: 1.25rem;
 }
 
 .floating-balloon {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   position: relative;
   cursor: pointer;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), rgba(212, 175, 55, 0.25) 50%, rgba(20, 22, 34, 0.7) 100%);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(207, 168, 78, 0.25) 50%, rgba(20, 22, 34, 0.7) 100%);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), inset 0 2px 6px rgba(255, 255, 255, 0.3);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35), inset 0 2px 5px rgba(255, 255, 255, 0.25);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s;
   animation: float-bob 3.5s ease-in-out infinite alternate;
+  touch-action: manipulation;
 }
 
-.floating-balloon:hover {
-  transform: scale(1.18);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.3);
+.floating-balloon:active {
+  transform: scale(1.25);
 }
 
 @keyframes float-bob {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-14px); }
+  100% { transform: translateY(-12px); }
 }
 
 .pop-toast {
-  margin-top: 1.5rem;
-  min-height: 30px;
-  font-size: 1rem;
+  margin-top: 1.25rem;
+  min-height: 28px;
+  font-size: 0.95rem;
   font-weight: 500;
   color: var(--gold-light);
   letter-spacing: 0.3px;
@@ -514,81 +555,82 @@ body {
 }
 
 /* ==========================================================================
-   Artisanal Birthday Cake (At the Bottom - Climax Finale)
+   Artisanal Birthday Cake (Grand Finale at the Bottom)
    ========================================================================== */
 .cake-section {
-  max-width: 620px;
-  margin: 5rem auto 3rem;
-  padding: 0 1.5rem;
+  max-width: 580px;
+  margin: 4rem auto 2.5rem;
+  padding: 0 1.25rem;
   text-align: center;
 }
 
 .cake-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 3rem 2rem 2.5rem;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem 2rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
 .cake-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.85rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.85rem, 5vw, 2.3rem);
   font-weight: 600;
   color: #ffffff;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
 }
 
 .cake-hint {
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: var(--text-muted);
-  margin-bottom: 2.25rem;
+  margin-bottom: 2rem;
   font-weight: 300;
 }
 
 .cake-container {
-  width: 260px;
-  height: 220px;
-  margin: 0 auto 1.75rem;
+  width: 240px;
+  height: 200px;
+  margin: 0 auto 1.5rem;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .candles-row {
   display: flex;
-  gap: 26px;
+  gap: 24px;
   margin-bottom: -4px;
   z-index: 10;
 }
 
 .candle {
-  width: 10px;
-  height: 50px;
-  background: linear-gradient(180deg, #f8f6f0 0%, #d4af37 100%);
+  width: 9px;
+  height: 46px;
+  background: linear-gradient(180deg, #fcfbf9 0%, #cfa84e 100%);
   border-radius: 3px 3px 0 0;
   position: relative;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .flame {
   position: absolute;
-  top: -22px;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 12px;
-  height: 22px;
+  width: 11px;
+  height: 20px;
   background: radial-gradient(ellipse at bottom, #ffffff 15%, #ffd700 45%, #ff7700 90%);
   border-radius: 50% 50% 35% 35%;
-  box-shadow: 0 0 16px 4px rgba(255, 180, 50, 0.7);
+  box-shadow: 0 0 15px 4px rgba(255, 180, 50, 0.65);
   animation: flicker 0.9s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: bottom center;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 @keyframes flicker {
@@ -604,8 +646,8 @@ body {
 
 /* Minimalist Artisanal Cake Tiers */
 .cake-tier-top {
-  width: 160px;
-  height: 52px;
+  width: 145px;
+  height: 48px;
   background: linear-gradient(180deg, #fcfbf9, #ede6da);
   border-radius: 8px 8px 0 0;
   position: relative;
@@ -614,8 +656,8 @@ body {
 }
 
 .cake-tier-bottom {
-  width: 220px;
-  height: 65px;
+  width: 200px;
+  height: 60px;
   background: linear-gradient(180deg, #2d262b, #1e191d);
   border-radius: 10px 10px 0 0;
   position: relative;
@@ -624,23 +666,23 @@ body {
 }
 
 .cake-plate {
-  width: 260px;
-  height: 10px;
+  width: 240px;
+  height: 9px;
   background: linear-gradient(90deg, #333945, #51596b, #333945);
   border-radius: 8px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
 }
 
 .blow-status {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.05rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem;
   font-weight: 500;
   color: var(--gold-light);
-  min-height: 26px;
+  min-height: 24px;
 }
 
 /* ==========================================================================
-   Interactive Photo Lightbox & Story Modal
+   Photo Lightbox Modal (Mobile Optimized Bottom-Sheet & Card)
    ========================================================================== */
 .photo-modal {
   position: fixed;
@@ -649,10 +691,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.25rem;
+  padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.35s ease, visibility 0.35s;
+  transition: opacity 0.3s ease, visibility 0.3s;
 }
 
 .photo-modal.active {
@@ -663,7 +705,7 @@ body {
 .modal-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(4, 5, 8, 0.85);
+  background: rgba(3, 4, 7, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
@@ -672,16 +714,19 @@ body {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 860px;
-  background: rgba(14, 16, 26, 0.92);
+  max-width: 820px;
+  max-height: 88vh;
+  background: rgba(13, 15, 24, 0.94);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 35px rgba(212, 175, 55, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85);
   overflow: hidden;
-  transform: scale(0.94) translateY(15px);
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: scale(0.95) translateY(10px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .photo-modal.active .modal-card {
@@ -690,28 +735,27 @@ body {
 
 .modal-close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-  width: 36px;
-  height: 36px;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 20;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(20, 22, 34, 0.8);
+  background: rgba(18, 20, 32, 0.85);
   color: #fff;
-  font-size: 1rem;
+  font-size: 1.05rem;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s;
+  touch-action: manipulation;
 }
 
-.modal-close-btn:hover {
+.modal-close-btn:active {
   background: #ffffff;
   color: #000000;
-  border-color: #ffffff;
-  transform: scale(1.08);
 }
 
 .modal-layout {
@@ -722,97 +766,104 @@ body {
 @media (min-width: 768px) {
   .modal-layout {
     flex-direction: row;
-    min-height: 460px;
+    min-height: 440px;
   }
 }
 
 .modal-image-container {
-  flex: 1.15;
+  flex: 1.1;
   position: relative;
-  background: #08090d;
+  background: #06070a;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  max-height: 340px;
+}
+
+@media (min-width: 768px) {
+  .modal-image-container {
+    max-height: none;
+  }
 }
 
 .modal-image-container img {
   width: 100%;
   height: 100%;
-  max-height: 500px;
+  max-height: 480px;
   object-fit: cover;
   display: block;
 }
 
 .modal-date-badge {
   position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  background: rgba(10, 11, 16, 0.8);
+  bottom: 0.85rem;
+  left: 0.85rem;
+  background: rgba(8, 10, 15, 0.85);
   backdrop-filter: blur(8px);
   color: var(--gold-light);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 0.35rem 0.85rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(207, 168, 78, 0.25);
 }
 
 .modal-text-container {
   flex: 1;
-  padding: 2.5rem 2rem 2rem;
+  padding: 1.75rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(135deg, rgba(16, 18, 28, 0.95), rgba(12, 14, 22, 0.95));
+  background: linear-gradient(135deg, rgba(15, 17, 26, 0.95), rgba(11, 13, 20, 0.95));
 }
 
 .modal-tag {
   color: var(--gold-accent);
-  font-size: 0.8rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
 
 .modal-caption {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
   font-weight: 600;
   color: #ffffff;
-  margin-top: 0.4rem;
-  line-height: 1.3;
+  margin-top: 0.25rem;
+  line-height: 1.25;
 }
 
 .modal-divider {
-  width: 40px;
+  width: 36px;
   height: 2px;
   background: var(--gold-accent);
-  margin: 1rem 0 1.25rem;
+  margin: 0.75rem 0 1rem;
 }
 
 .modal-message-box {
   position: relative;
-  background: rgba(10, 12, 18, 0.5);
+  background: rgba(8, 10, 15, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 1.4rem 1.3rem;
-  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  padding: 1.15rem 1.1rem;
+  margin-bottom: 1.25rem;
 }
 
 .quote-icon {
   position: absolute;
   top: 0.1rem;
-  left: 0.7rem;
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  color: rgba(212, 175, 55, 0.2);
+  left: 0.6rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  color: rgba(207, 168, 78, 0.25);
   line-height: 1;
 }
 
 .modal-message-text {
-  font-size: 0.98rem;
-  line-height: 1.7;
+  font-size: 0.94rem;
+  line-height: 1.65;
   color: #e2e8f0;
   position: relative;
   z-index: 2;
@@ -823,7 +874,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 1rem;
+  padding-top: 0.85rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -831,22 +882,23 @@ body {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  padding: 0.45rem 1rem;
+  padding: 0.45rem 0.95rem;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
   transition: all 0.2s ease;
+  touch-action: manipulation;
 }
 
-.nav-btn:hover {
+.nav-btn:active {
   background: var(--gold-accent);
   color: #000000;
   border-color: var(--gold-accent);
 }
 
 .nav-counter {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   font-weight: 400;
 }
@@ -854,9 +906,9 @@ body {
 /* Footer */
 footer {
   text-align: center;
-  padding: 4rem 1rem 1.5rem;
+  padding: 3rem 1rem 1.5rem;
   color: #64748b;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 300;
   letter-spacing: 0.5px;
 }
