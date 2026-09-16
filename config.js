@@ -177,6 +177,9 @@ const CONFIG = {
   }
 };
 
+if (typeof window !== 'undefined') {
+  window.CONFIG = CONFIG;
+}
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = CONFIG;
 }
