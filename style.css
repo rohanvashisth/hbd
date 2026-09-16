@@ -170,6 +170,8 @@ body {
    STAGE 2: Main Party Experience (Mobile Optimized)
    ========================================================================== */
 #main-stage {
+  position: relative;
+  z-index: 2;
   opacity: 0;
   transition: opacity 0.9s ease;
   min-height: 100vh;
