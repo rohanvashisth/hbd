@@ -455,9 +455,24 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 20px;
-  padding: 1rem 1rem 1.15rem;
+  padding: 1.25rem 1rem 1.15rem;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
   text-align: center;
+}
+
+.viewer-header {
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.viewer-header .section-eyebrow {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold-accent);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
 .viewer-frame {
