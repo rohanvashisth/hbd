@@ -8,6 +8,12 @@ const CONFIG = {
   friendName: "Barbie",
   nickname: "Barbie",
 
+  // Pre-Launch Countdown Settings (unlocks automatically at 12:00 AM on Sept 20th EST / EDT)
+  countdown: {
+    targetTime: "2026-09-20T00:00:00-04:00",
+    label: "unlocks in"
+  },
+
   // Birthday celebration header
   birthdayTitle: "Happy Birthday, Barbie!",
   subtitle: "Today is all about celebrating you and every magical memory we share!",
