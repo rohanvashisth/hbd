@@ -8,9 +8,9 @@ const CONFIG = {
   friendName: "Barbie",
   nickname: "Barbie",
 
-  // Pre-Launch Countdown Settings (unlocks automatically at 12:00 AM on Sept 20th Central Time / Austin time)
+  // Pre-Launch Countdown Settings (unlocks automatically at 12:00 AM on Sept 20th Eastern Time)
   countdown: {
-    targetTime: "2026-09-20T00:00:00-05:00",
+    targetTime: "2026-09-20T00:00:00-04:00",
     label: "unlocks in"
   },
 
