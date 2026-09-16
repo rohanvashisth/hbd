@@ -14,7 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Custom Stylesheet (Cache-Busted) -->
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
@@ -23,6 +23,36 @@
     <div id="bg-slide-a" class="bg-slide"></div>
     <div id="bg-slide-b" class="bg-slide"></div>
     <div class="bg-slideshow-overlay"></div>
+  </div>
+
+  <!-- ======================================================================
+       STAGE 0: Minimalist Pre-Launch Countdown (Locks until Sept 20, 12 AM EST)
+       ====================================================================== -->
+  <div id="countdown-screen" class="countdown-screen" aria-live="polite">
+    <div class="countdown-card">
+      <div class="countdown-label" id="countdown-label">unlocks in</div>
+      <div class="countdown-timer">
+        <div class="timer-unit">
+          <span id="cd-days" class="timer-num">00</span>
+          <span class="timer-sub">days</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-unit">
+          <span id="cd-hours" class="timer-num">00</span>
+          <span class="timer-sub">hours</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-unit">
+          <span id="cd-mins" class="timer-num">00</span>
+          <span class="timer-sub">mins</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-unit">
+          <span id="cd-secs" class="timer-num">00</span>
+          <span class="timer-sub">secs</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ======================================================================
@@ -121,7 +151,7 @@
   </div>
 
   <!-- Scripts (Cache-Busted) -->
-  <script src="config.js?v=14"></script>
-  <script src="script.js?v=14"></script>
+  <script src="config.js?v=15"></script>
+  <script src="script.js?v=15"></script>
 </body>
 </html>
