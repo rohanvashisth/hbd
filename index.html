@@ -14,7 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Custom Stylesheet (Cache-Busted) -->
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
   <div id="lockscreen">
     <div class="lock-card">
       <label for="name-input" class="lock-label">enter name</label>
-      <div class="input-container">
+      <form id="lock-form" class="input-container" action="javascript:void(0);" autocomplete="off">
         <input 
           type="text" 
           id="name-input" 
@@ -40,10 +40,11 @@
           autocorrect="off"
           autocapitalize="off"
           spellcheck="false"
+          enterkeyhint="go"
           autofocus
         />
-        <button id="unlock-btn" class="unlock-btn" aria-label="Submit">↵</button>
-      </div>
+        <button type="submit" id="unlock-btn" class="unlock-btn" aria-label="Submit">↵</button>
+      </form>
       <div id="error-msg" class="error-msg"></div>
     </div>
   </div>
@@ -123,7 +124,7 @@
   </div>
 
   <!-- Scripts (Cache-Busted) -->
-  <script src="config.js?v=8"></script>
-  <script src="script.js?v=8"></script>
+  <script src="config.js?v=9"></script>
+  <script src="script.js?v=9"></script>
 </body>
 </html>
