@@ -3,8 +3,8 @@
 // =========================================================
 
 const CONFIG = {
-  // Gatekeeper unlock settings (case-insensitive)
-  allowedNames: ["nono", "nono!", "barbie", "barbie!"],
+  // Gatekeeper unlock settings (case-insensitive) - strictly "nono" only
+  allowedNames: ["nono"],
   friendName: "Barbie",
   nickname: "Barbie",
 
