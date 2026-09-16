@@ -16,19 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const confettiBlastBtn = document.getElementById('confetti-blast-btn');
   const bgAudio = document.getElementById('bg-audio');
 
-  // Photo Modal Elements
-  const photoModal = document.getElementById('photo-modal');
-  const modalOverlay = document.getElementById('modal-overlay');
-  const modalCloseBtn = document.getElementById('modal-close-btn');
-  const modalImg = document.getElementById('modal-img');
-  const modalCaption = document.getElementById('modal-caption');
-  const modalDate = document.getElementById('modal-date');
-  const modalMessage = document.getElementById('modal-message');
-  const modalCounter = document.getElementById('modal-counter');
-  const modalPrevBtn = document.getElementById('modal-prev-btn');
-  const modalNextBtn = document.getElementById('modal-next-btn');
-
-  let currentMemoryIndex = 0;
+  // Background Slideshow Elements
+  const bgSlideA = document.getElementById('bg-slide-a');
+  const bgSlideB = document.getElementById('bg-slide-b');
 
   // Initialize and populate dynamic content from CONFIG
   setupConfigContent();
