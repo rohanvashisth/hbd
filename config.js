@@ -26,7 +26,8 @@ const CONFIG = {
       "And whenever things get difficult, I hope you remember that you’re capable of so much more than you sometimes give yourself credit for. There will always be ups and downs, but I know you’ll keep finding your way through them. I’ll always be rooting for you, and I’ll always be happy to see you win.",
       "You’re always so full of life, and that’s one of the things I love most about you. You make life more fun, more memorable, and honestly, a lot more entertaining.",
       "We’ve come a long way since that orientation day, Barbie, and I’m so lucky I get to call you my best friend. I hope we continue making memories, going on trips, discovering new music, laughing at the most random things, and being there for each other through all the different chapters of life.",
-      "You deserve the world, Barbie. I hope you get everything you’ve ever wanted, and so much more. And I hope you never forget how loved, appreciated, and special you are to the people who have you in their lives."
+      "You deserve the world, Barbie. I hope you get everything you’ve ever wanted, and so much more. And I hope you never forget how loved, appreciated, and special you are to the people who have you in their lives.",
+      "Have the best day ever, Barbie! Have lots and lots of fun, make the most of your day, and let yourself be celebrated because you deserve it. I wish I could be there to celebrate with you, I miss you."
     ],
     signoff: "Love you, Barbiiiieeeeee. Happiest birthday once again! ❤️",
     sender: "Rohan"
