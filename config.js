@@ -29,7 +29,7 @@ const CONFIG = {
       "You deserve the world, Barbie. I hope you get everything you’ve ever wanted, and so much more. And I hope you never forget how loved, appreciated, and special you are to the people who have you in their lives.",
       "Have the best day ever, Barbie! Have lots and lots of fun, make the most of your day, and let yourself be celebrated because you deserve it. I wish I could be there to celebrate with you, I miss you."
     ],
-    signoff: "Love you, Barbiiiieeeeee. Happiest birthday once again! ❤️",
+    signoff: "Love you Barbie. Happiest birthday once again! ❤️",
     sender: "Rohan"
   },
 
