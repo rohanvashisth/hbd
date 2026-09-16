@@ -76,36 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --------------------------------------------------------------------------
-  // Interactive Birthday Cake & Candles (Sound Effects Removed)
-  // --------------------------------------------------------------------------
-  const cakeContainer = document.getElementById('cake-container');
-  const flames = document.querySelectorAll('.flame');
-  const blowStatus = document.getElementById('blow-status');
-  let blownCount = 0;
 
-  cakeContainer.addEventListener('click', (e) => {
-    const flameEl = e.target.closest('.flame');
-    if (flameEl && !flameEl.classList.contains('blown-out')) {
-      extinguishFlame(flameEl);
-    } else {
-      flames.forEach(flame => {
-        if (!flame.classList.contains('blown-out')) {
-          extinguishFlame(flame);
-        }
-      });
-    }
-  });
-
-  function extinguishFlame(flame) {
-    flame.classList.add('blown-out');
-    blownCount++;
-
-    if (blownCount >= flames.length) {
-      blowStatus.innerHTML = `✨ Make a wish, ${CONFIG.friendName}! May all your dreams come true! 🎂✨`;
-      fireHeartConfetti();
-    }
-  }
 
   // --------------------------------------------------------------------------
   // Ambient Background Photo Slideshow (Dual-Buffer Cinematic Crossfade)
