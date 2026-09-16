@@ -140,39 +140,94 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackgroundSlideshow();
 
   // --------------------------------------------------------------------------
-  // Floating Orbs / Wishes (Sound Effects Removed)
+  // Single Window Photo Viewer (Looping with Mobile Touch-Swipe Support)
   // --------------------------------------------------------------------------
-  const balloonArea = document.getElementById('balloon-area');
-  const popToast = document.getElementById('pop-toast');
-  const orbGradients = [
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(212, 175, 55, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(224, 159, 175, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(180, 205, 235, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)',
-    'radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.5), rgba(230, 215, 180, 0.3) 50%, rgba(20, 22, 34, 0.7) 100%)'
-  ];
+  const viewerImg = document.getElementById('viewer-img');
+  const viewerCounter = document.getElementById('viewer-counter');
+  const viewerPrevArrow = document.getElementById('viewer-prev-arrow');
+  const viewerNextArrow = document.getElementById('viewer-next-arrow');
+  const viewerPrevBtn = document.getElementById('viewer-prev-btn');
+  const viewerNextBtn = document.getElementById('viewer-next-btn');
+  const viewerFrame = document.getElementById('viewer-frame');
 
-  function spawnBalloons() {
-    balloonArea.innerHTML = '';
-    CONFIG.balloonCompliments.forEach((compliment, index) => {
-      const balloon = document.createElement('div');
-      balloon.className = 'floating-balloon';
-      const gradient = orbGradients[index % orbGradients.length];
-      balloon.style.background = gradient;
-      balloon.style.animationDelay = `${(index * 0.35).toFixed(2)}s`;
+  let currentViewerIndex = 0;
 
-      balloon.addEventListener('click', () => {
-        fireBalloonPopConfetti(balloon);
-        popToast.textContent = `✨ "${compliment}"`;
-        balloon.style.transform = 'scale(1.35)';
-        balloon.style.opacity = '0';
-        setTimeout(() => balloon.remove(), 250);
-      });
+  function showViewerPhoto(index, animate = true) {
+    if (!slideshowPhotos.length || !viewerImg) return;
 
-      balloonArea.appendChild(balloon);
-    });
+    // Infinite loop wrap
+    currentViewerIndex = (index + slideshowPhotos.length) % slideshowPhotos.length;
+    const photoUrl = slideshowPhotos[currentViewerIndex];
+
+    if (animate) {
+      viewerImg.classList.add('fade-out');
+      setTimeout(() => {
+        viewerImg.src = photoUrl;
+        viewerImg.classList.remove('fade-out');
+      }, 150);
+    } else {
+      viewerImg.src = photoUrl;
+    }
+
+    if (viewerCounter) {
+      viewerCounter.textContent = `${currentViewerIndex + 1} / ${slideshowPhotos.length}`;
+    }
+
+    // Preload adjacent images
+    const nextIdx = (currentViewerIndex + 1) % slideshowPhotos.length;
+    const prevIdx = (currentViewerIndex - 1 + slideshowPhotos.length) % slideshowPhotos.length;
+    preloadImage(slideshowPhotos[nextIdx]);
+    preloadImage(slideshowPhotos[prevIdx]);
   }
 
-  spawnBalloons();
+  function nextViewerPhoto() {
+    showViewerPhoto(currentViewerIndex + 1);
+  }
+
+  function prevViewerPhoto() {
+    showViewerPhoto(currentViewerIndex - 1);
+  }
+
+  if (viewerNextArrow) viewerNextArrow.addEventListener('click', nextViewerPhoto);
+  if (viewerPrevArrow) viewerPrevArrow.addEventListener('click', prevViewerPhoto);
+  if (viewerNextBtn) viewerNextBtn.addEventListener('click', nextViewerPhoto);
+  if (viewerPrevBtn) viewerPrevBtn.addEventListener('click', prevViewerPhoto);
+
+  // Mobile Touch Swipe Support
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  if (viewerFrame) {
+    viewerFrame.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    viewerFrame.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].screenX;
+      const touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      // Trigger if primary motion is horizontal swipe
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+        if (diffX > 0) {
+          prevViewerPhoto(); // Swipe right -> Previous
+        } else {
+          nextViewerPhoto(); // Swipe left -> Next
+        }
+      }
+    }, { passive: true });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextViewerPhoto();
+    if (e.key === 'ArrowLeft') prevViewerPhoto();
+  });
+
+  // Display initial photo in viewer
+  showViewerPhoto(0, false);
 
   // --------------------------------------------------------------------------
   // Soft Music Control: Local MP3 Track (Gallan 4 Karaoke)
@@ -242,30 +297,6 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(frame);
       }
     }());
-  }
-
-  function fireHeartConfetti() {
-    if (typeof confetti !== 'function') return;
-    confetti({
-      particleCount: 60,
-      spread: 90,
-      origin: { y: 0.6 },
-      colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf', '#ffffff']
-    });
-  }
-
-  function fireBalloonPopConfetti(balloonEl) {
-    if (typeof confetti !== 'function') return;
-    const rect = balloonEl.getBoundingClientRect();
-    const x = (rect.left + rect.width / 2) / window.innerWidth;
-    const y = (rect.top + rect.height / 2) / window.innerHeight;
-
-    confetti({
-      particleCount: 20,
-      spread: 50,
-      origin: { x, y },
-      colors: ['#d4af37', '#f8fafc', '#e8d08d', '#e09faf']
-    });
   }
 
   confettiBlastBtn.addEventListener('click', () => {
