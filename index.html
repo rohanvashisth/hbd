@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Happy Birthday, Barbie</title>
   
-  <!-- Fonts: Playfair Display & Poppins -->
+  <!-- High-Fashion Luxury Fonts: Cormorant Garamond & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -19,7 +19,7 @@
 <body>
 
   <!-- ======================================================================
-       STAGE 1: Monochromatic Minimalist Start Page ("enter name")
+       STAGE 1: Minimalist Monochromatic Start Page ("enter name")
        ====================================================================== -->
   <div id="lockscreen">
     <div class="lock-card">
@@ -30,6 +30,8 @@
           id="name-input" 
           class="lock-input" 
           autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
           spellcheck="false"
           autofocus
         />
@@ -40,7 +42,7 @@
   </div>
 
   <!-- Background MP3 Audio Player -->
-  <audio id="bg-audio" loop preload="auto">
+  <audio id="bg-audio" loop preload="auto" playsinline>
     <source src="Music/Gallan%204%20Karaoke.mp3" type="audio/mpeg">
   </audio>
 
@@ -61,15 +63,17 @@
 
     <!-- Hero Section -->
     <header class="hero-section">
-      <h1 id="bday-title" class="bday-title">Happy Birthday, Barbie</h1>
+      <div class="hero-eyebrow">A Celebration of You</div>
+      <h1 id="bday-title" class="bday-title">Happy Birthday, <em>Barbie</em></h1>
       <p id="bday-subtitle" class="bday-subtitle">Celebrating you and every cherished memory we share.</p>
     </header>
 
     <!-- Memory Lane: Polaroid Wall with Click-to-Read Messages -->
     <section class="memories-section">
       <div class="section-heading">
+        <span class="section-eyebrow">Exhibition</span>
         <h2>Memory Lane</h2>
-        <p>A collection of moments through the years &bull; Click to read note</p>
+        <p>A collection of moments through the years &bull; Tap to read note</p>
       </div>
 
       <div id="polaroid-grid" class="polaroid-grid">
@@ -81,7 +85,7 @@
     <section class="letter-section">
       <div class="letter-envelope">
         <div class="letter-badge">💌</div>
-        <h2 id="letter-title" class="letter-title">A Special Note for Barbie</h2>
+        <h2 id="letter-title" class="letter-title">A Note for Barbie</h2>
         <div class="letter-content">
           <p id="letter-salutation" class="letter-salutation"></p>
           <div id="letter-body"></div>
@@ -90,10 +94,11 @@
       </div>
     </section>
 
-    <!-- Interactive Balloon Pop Playground -->
+    <!-- Interactive Balloon / Floating Orbs Playground -->
     <section class="balloon-game-section">
       <div class="section-heading">
-        <h2>Moments &amp; Wishes</h2>
+        <span class="section-eyebrow">Wishes</span>
+        <h2>Floating Reflections</h2>
         <p>Tap each floating orb to reveal a personal note</p>
       </div>
 
@@ -101,16 +106,17 @@
         <!-- Injected dynamically from script.js -->
       </div>
 
-      <div id="pop-toast" class="pop-toast">Select any orb above to reveal</div>
+      <div id="pop-toast" class="pop-toast">Tap any orb above to reveal</div>
     </section>
 
-    <!-- Interactive Birthday Cake (Moved to the Bottom as Grand Finale) -->
+    <!-- Interactive Birthday Cake (Grand Finale at the Bottom) -->
     <section class="cake-section">
       <div class="cake-card">
+        <span class="section-eyebrow">The Finale</span>
         <h2 class="cake-title">Make a Wish</h2>
-        <p class="cake-hint">Click on the candles or cake to blow them out</p>
+        <p class="cake-hint">Tap on the candles or cake to blow them out</p>
 
-        <div id="cake-container" class="cake-container" title="Click to blow out the candles">
+        <div id="cake-container" class="cake-container" title="Tap to blow out the candles">
           <div class="candles-row">
             <div class="candle"><div class="flame"></div></div>
             <div class="candle"><div class="flame"></div></div>
@@ -133,7 +139,7 @@
   </div>
 
   <!-- ======================================================================
-       STAGE 3: Interactive Photo Lightbox & Story Modal
+       STAGE 3: Interactive Photo Lightbox & Story Modal (Mobile-Optimized)
        ====================================================================== -->
   <div id="photo-modal" class="photo-modal" aria-hidden="true">
     <div class="modal-overlay" id="modal-overlay"></div>
