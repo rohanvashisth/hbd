@@ -17,7 +17,7 @@ const CONFIG = {
     title: "A Note for Barbie",
     salutation: "Happiest Birthday Barbiiiieeeeee!!!!!! 🎉",
     body: [
-      "Thank you for being my best friend, you beautiful, funny, smart, pretty, adorable, mastikhor, absolute gem of a person. Meeting you two years ago is genuinely one of the best things that happened to me, and I don’t think I’ll ever be able to fully explain how grateful I am that you came into my life.",
+      "Thank you for being my best friend, you Beautiful, Funny, Smart, Pretty, Adorable, Mastikhor, Absolute gem of a person. Meeting you two years ago is genuinely one of the best things that happened to me, and I don’t think I’ll ever be able to fully explain how grateful I am that you came into my life.",
       "I still remember the first time you walked into RBS on orientation day. This tall girl walking over the boys and intimidating all of them, And then you introduced yourself in that 6th-floor room, and I heard it - Barbie Tyagi. A name no one can ever forget.",
       "We started as classmates, became project partners, went on trips, shared music, and somehow became best friends along the way. I remember working on the accounts project together and realizing how much we just jammed. You were honestly the one person I wanted to become friends with, and I’m so happy that we did.",
       "Looking back, it’s crazy to think that two years ago you were just someone I met in class, and today you’re someone I can’t imagine my USA journey, or my life, without. You’ve become such an important part of my life, and I’ll always cherish the memories we’ve made together. The trips, the random conversations, the music, the laughter, and all the little moments in between.",
@@ -27,8 +27,8 @@ const CONFIG = {
       "You’re always so full of life, and that’s one of the things I love most about you. You make life more fun, more memorable, and honestly, a lot more entertaining.",
       "We’ve come a long way since that orientation day, Barbie, and I’m so lucky I get to call you my best friend. I hope we continue making memories, going on trips, discovering new music, laughing at the most random things, and being there for each other through all the different chapters of life.",
       "You deserve the world, Barbie. I hope you get everything you’ve ever wanted, and so much more. And I hope you never forget how loved, appreciated, and special you are to the people who have you in their lives.",
-      "Have the best day ever, Barbie! Have lots and lots of fun, make the most of your day, and let yourself be celebrated because you deserve it. I wish I could be there to celebrate with you, I miss you.",
-      'dont forget - "Tenu pouna zidd dil di,  Mai vi vekhda kidda ni mildi 😌"'
+      "Have the best day ever, Barbie! Have lots and lots of fun, make the most of your day, and let yourself be celebrated because you deserve it. I wish I could be there to celebrate with you, I miss you!!!!",
+      'P.S. Dont forget - "Tenu pouna zidd dil di,  Mai vi vekhda kidda ni mildi 😌"'
     ],
     signoff: "Love you Barbie. Happiest birthday once again! ❤️",
     sender: "Rohan"
