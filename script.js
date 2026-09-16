@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Elements
   const lockscreen = document.getElementById('lockscreen');
   const lockCard = document.querySelector('.lock-card');
+  const lockForm = document.getElementById('lock-form');
   const nameInput = document.getElementById('name-input');
   const unlockBtn = document.getElementById('unlock-btn');
   const errorMsg = document.getElementById('error-msg');
@@ -20,15 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgSlideA = document.getElementById('bg-slide-a');
   const bgSlideB = document.getElementById('bg-slide-b');
 
-  // Initialize and populate dynamic content from CONFIG
-  setupConfigContent();
+  // Safely initialize content from CONFIG
+  try {
+    setupConfigContent();
+  } catch (err) {
+    console.warn("setupConfigContent notice:", err);
+  }
 
   // --------------------------------------------------------------------------
   // Gatekeeper: Name Verification
   // --------------------------------------------------------------------------
   function verifyName() {
-    const rawValue = nameInput.value || '';
-    const cleanValue = rawValue.trim().toLowerCase();
+    const rawValue = (nameInput && nameInput.value) ? nameInput.value : '';
+    // Normalize string: trim, lowercase, strip zero-width chars and punctuation
+    const cleanValue = rawValue.trim().toLowerCase().replace(/[\u200B-\u200D\uFEFF]/g, '').replace(/[!.,?]/g, '');
 
     // Strictly "nono" only (case-insensitive) - nothing else unlocks
     const isMatch = (cleanValue === "nono");
@@ -41,40 +47,77 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleFailedUnlock() {
-    lockCard.classList.remove('shake');
-    void lockCard.offsetWidth; // Force reflow
-    lockCard.classList.add('shake');
+    if (lockCard) {
+      lockCard.classList.remove('shake');
+      void lockCard.offsetWidth; // Force reflow
+      lockCard.classList.add('shake');
+    }
 
-    errorMsg.textContent = "not your hbd";
-    nameInput.focus();
-    nameInput.select();
+    if (errorMsg) {
+      errorMsg.textContent = "not your hbd";
+    }
+    if (nameInput) {
+      nameInput.focus();
+      nameInput.select();
+    }
   }
 
   function handleSuccessUnlock() {
-    errorMsg.textContent = "";
-    nameInput.disabled = true;
-    unlockBtn.disabled = true;
+    if (errorMsg) errorMsg.textContent = "";
+    if (nameInput) nameInput.disabled = true;
+    if (unlockBtn) unlockBtn.disabled = true;
 
-    // Start soft background music on direct user tap
-    startSoftBackgroundMusic();
-
-    // Elegant celebratory confetti cannon
-    fireMassiveConfetti();
-
-    // Smooth transition into the main celebration stage
-    setTimeout(() => {
+    // Immediately unlock lockscreen and reveal celebration stage
+    if (lockscreen) {
       lockscreen.classList.add('unlocked');
+      setTimeout(() => {
+        lockscreen.style.display = 'none';
+      }, 700);
+    }
+    if (mainStage) {
       mainStage.classList.add('visible');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 600);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Safe background audio playback
+    try {
+      startSoftBackgroundMusic();
+    } catch (err) {
+      console.warn("Audio start notice:", err);
+    }
+
+    // Safe celebratory confetti
+    try {
+      fireMassiveConfetti();
+    } catch (err) {
+      console.warn("Confetti notice:", err);
+    }
   }
 
-  unlockBtn.addEventListener('click', verifyName);
-  nameInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
+  // Form submission (critical for mobile keyboards)
+  if (lockForm) {
+    lockForm.addEventListener('submit', (e) => {
+      e.preventDefault();
       verifyName();
-    }
-  });
+    });
+  }
+
+  if (unlockBtn) {
+    unlockBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      verifyName();
+    });
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.keyCode === 13) {
+        e.preventDefault();
+        verifyName();
+      }
+    });
+  }
 
 
 
@@ -137,7 +180,11 @@ document.addEventListener('DOMContentLoaded', () => {
     inactiveSlideEl = temp;
   }
 
-  initBackgroundSlideshow();
+  try {
+    initBackgroundSlideshow();
+  } catch (err) {
+    console.warn("Slideshow init notice:", err);
+  }
 
   // --------------------------------------------------------------------------
   // Single Window Photo Viewer (Looping with Mobile Touch-Swipe Support)
@@ -226,8 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'ArrowLeft') prevViewerPhoto();
   });
 
-  // Display initial photo in viewer
-  showViewerPhoto(0, false);
+  // Display initial photo in viewer safely
+  try {
+    showViewerPhoto(0, false);
+  } catch (err) {
+    console.warn("Viewer photo notice:", err);
+  }
 
   // --------------------------------------------------------------------------
   // Soft Music Control: Local MP3 Track (Gallan 4 Karaoke)
