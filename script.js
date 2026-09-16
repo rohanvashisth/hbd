@@ -40,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const rawValue = nameInput.value || '';
     const cleanValue = rawValue.trim().toLowerCase();
 
-    // Check against allowed names list (case-insensitive)
-    const isMatch = CONFIG.allowedNames.some(name => name.trim().toLowerCase() === cleanValue);
+    // Strictly "nono" only (case-insensitive) - nothing else unlocks
+    const isMatch = (cleanValue === "nono");
 
     if (isMatch) {
       handleSuccessUnlock();
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     void lockCard.offsetWidth; // Force reflow
     lockCard.classList.add('shake');
 
-    errorMsg.textContent = "incorrect name";
+    errorMsg.textContent = "not your hbd";
     nameInput.focus();
     nameInput.select();
   }
