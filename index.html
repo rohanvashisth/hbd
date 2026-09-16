@@ -14,9 +14,16 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
   <!-- Custom Stylesheet (Cache-Busted) -->
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
+
+  <!-- Ambient Background Photo Slideshow (Cinematic Dual-Buffer) -->
+  <div id="bg-slideshow" class="bg-slideshow" aria-hidden="true">
+    <div id="bg-slide-a" class="bg-slide"></div>
+    <div id="bg-slide-b" class="bg-slide"></div>
+    <div class="bg-slideshow-overlay"></div>
+  </div>
 
   <!-- ======================================================================
        STAGE 1: Minimalist Monochromatic Start Page ("enter name")
@@ -78,19 +85,6 @@
           <div id="letter-body"></div>
           <div id="letter-signoff" class="letter-signoff"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- Memory Lane: Polaroid Wall with Click-to-Read Messages -->
-    <section class="memories-section">
-      <div class="section-heading">
-        <span class="section-eyebrow">Exhibition</span>
-        <h2>Memory Lane</h2>
-        <p>A collection of moments through the years &bull; Tap to read note</p>
-      </div>
-
-      <div id="polaroid-grid" class="polaroid-grid">
-        <!-- Injected dynamically from config.js -->
       </div>
     </section>
 
