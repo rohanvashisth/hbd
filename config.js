@@ -9,8 +9,8 @@ const CONFIG = {
   nickname: "Barbie",
 
   // Birthday celebration header
-  birthdayTitle: "Happy Birthday, Barbie! 💖✨",
-  subtitle: "Today is all about celebrating you and every magical memory we share! 🎂🌸",
+  birthdayTitle: "Happy Birthday, Barbie!",
+  subtitle: "Today is all about celebrating you and every magical memory we share!",
 
   // Heartfelt Letter from Rohan
   letter: {
@@ -32,7 +32,7 @@ const CONFIG = {
     {
       id: 1,
       image: "Pictures/DSCN1980.JPG",
-      caption: "That unforgettable radiant smile ✨",
+      caption: "That unforgettable radiant smile",
       date: "Cherished Moment",
       message: "Every time I see this picture, it reminds me of how naturally you bring happiness to everyone around you. Never stop smiling your genuine smile! 🌸"
     },
