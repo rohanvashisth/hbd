@@ -108,48 +108,65 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // Interactive Photo Modal & Story Lightbox
+  // Ambient Background Photo Slideshow (Dual-Buffer Cinematic Crossfade)
   // --------------------------------------------------------------------------
-  function openPhotoModal(index) {
-    if (!CONFIG.memories || CONFIG.memories.length === 0) return;
-    
-    currentMemoryIndex = (index + CONFIG.memories.length) % CONFIG.memories.length;
-    const item = CONFIG.memories[currentMemoryIndex];
+  const slideshowPhotos = (CONFIG.slideshow && CONFIG.slideshow.photos && CONFIG.slideshow.photos.length > 0)
+    ? CONFIG.slideshow.photos
+    : (CONFIG.memories ? CONFIG.memories.map(m => m.image) : []);
 
-    modalImg.src = item.image;
-    modalCaption.textContent = item.caption || "Special Memory";
-    modalDate.textContent = item.date || "Memory";
-    modalMessage.textContent = item.message || "Thinking of you on your special day!";
-    modalCounter.textContent = `${currentMemoryIndex + 1} of ${CONFIG.memories.length}`;
+  let currentSlideIndex = 0;
+  let activeSlideEl = bgSlideA;
+  let inactiveSlideEl = bgSlideB;
+  let slideshowTimer = null;
+  const slideInterval = (CONFIG.slideshow && CONFIG.slideshow.intervalMs) || 5000;
 
-    photoModal.classList.add('active');
-    photoModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+  function preloadImage(url) {
+    if (!url) return;
+    const img = new Image();
+    img.src = url;
   }
 
-  function closePhotoModal() {
-    photoModal.classList.remove('active');
-    photoModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+  function initBackgroundSlideshow() {
+    if (!slideshowPhotos.length || !bgSlideA || !bgSlideB) return;
+
+    // Load first photo on Slide A
+    bgSlideA.style.backgroundImage = `url('${slideshowPhotos[0]}')`;
+    bgSlideA.classList.add('active');
+    currentSlideIndex = 0;
+
+    // Preload second photo for instantaneous transition
+    if (slideshowPhotos.length > 1) {
+      preloadImage(slideshowPhotos[1]);
+      if (!slideshowTimer) {
+        slideshowTimer = setInterval(transitionNextSlide, slideInterval);
+      }
+    }
   }
 
-  modalCloseBtn.addEventListener('click', closePhotoModal);
-  modalOverlay.addEventListener('click', closePhotoModal);
+  function transitionNextSlide() {
+    if (slideshowPhotos.length <= 1) return;
 
-  modalPrevBtn.addEventListener('click', () => {
-    openPhotoModal(currentMemoryIndex - 1);
-  });
+    currentSlideIndex = (currentSlideIndex + 1) % slideshowPhotos.length;
+    const nextPhotoUrl = slideshowPhotos[currentSlideIndex];
 
-  modalNextBtn.addEventListener('click', () => {
-    openPhotoModal(currentMemoryIndex + 1);
-  });
+    // Preload the upcoming next photo ahead of time
+    const upcomingIndex = (currentSlideIndex + 1) % slideshowPhotos.length;
+    preloadImage(slideshowPhotos[upcomingIndex]);
 
-  document.addEventListener('keydown', (e) => {
-    if (!photoModal.classList.contains('active')) return;
-    if (e.key === 'Escape') closePhotoModal();
-    if (e.key === 'ArrowLeft') openPhotoModal(currentMemoryIndex - 1);
-    if (e.key === 'ArrowRight') openPhotoModal(currentMemoryIndex + 1);
-  });
+    // Prepare inactive slide buffer with new photo
+    inactiveSlideEl.style.backgroundImage = `url('${nextPhotoUrl}')`;
+
+    // Smooth cinematic crossfade
+    inactiveSlideEl.classList.add('active');
+    activeSlideEl.classList.remove('active');
+
+    // Swap slide buffers
+    const temp = activeSlideEl;
+    activeSlideEl = inactiveSlideEl;
+    inactiveSlideEl = temp;
+  }
+
+  initBackgroundSlideshow();
 
   // --------------------------------------------------------------------------
   // Floating Orbs / Wishes (Sound Effects Removed)
@@ -308,29 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const letterSignoff = document.getElementById('letter-signoff');
     if (letterSignoff) {
       letterSignoff.innerHTML = `${CONFIG.letter.signoff} <span>${CONFIG.letter.sender}</span>`;
-    }
-
-    const polaroidGrid = document.getElementById('polaroid-grid');
-    if (polaroidGrid && CONFIG.memories) {
-      polaroidGrid.innerHTML = CONFIG.memories.map((mem, index) => `
-        <div class="polaroid-card" data-index="${index}" title="Tap to read Barbie's special note 💌">
-          <div class="polaroid-img-wrapper">
-            <img src="${mem.image}" alt="${mem.caption}" loading="lazy" />
-          </div>
-          <div class="polaroid-caption">${mem.caption}</div>
-          <div class="polaroid-footer">
-            <span class="polaroid-date">${mem.date}</span>
-            <span class="polaroid-click-hint">Read note 💌</span>
-          </div>
-        </div>
-      `).join('');
-
-      polaroidGrid.querySelectorAll('.polaroid-card').forEach(card => {
-        card.addEventListener('click', () => {
-          const index = parseInt(card.getAttribute('data-index'), 10);
-          openPhotoModal(index);
-        });
-      });
     }
   }
 });
