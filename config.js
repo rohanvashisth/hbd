@@ -33,8 +33,29 @@ const CONFIG = {
     sender: "Rohan"
   },
 
-  // Interactive Photo Memories with Click-to-Read Messages
-  // Loaded directly from your Pictures/ folder!
+  // Background Photo Slideshow Settings (14 pictures from Pictures/)
+  slideshow: {
+    intervalMs: 5000,
+    fadeDurationMs: 1800,
+    photos: [
+      "Pictures/DSCN1980.JPG",
+      "Pictures/DSCN1985.JPG",
+      "Pictures/IMG-20250526-WA0040.jpg",
+      "Pictures/IMG-20251123-WA0070.jpg",
+      "Pictures/PXL_20250516_231118525.PORTRAIT.jpg",
+      "Pictures/PXL_20250517_020808518.jpg",
+      "Pictures/PXL_20250520_201619927.PORTRAIT.jpg",
+      "Pictures/PXL_20251122_162536212.jpg",
+      "Pictures/PXL_20251207_015924010.jpg",
+      "Pictures/PXL_20260405_203720249.jpg",
+      "Pictures/PXL_20260405_210634777.MP.jpg",
+      "Pictures/PXL_20260405_210805156.PORTRAIT.jpg",
+      "Pictures/PXL_20260509_021837870.jpg",
+      "Pictures/PXL_20260519_195841736.jpg"
+    ]
+  },
+
+  // Interactive Photo Memories (Preserved)
   memories: [
     {
       id: 1,
