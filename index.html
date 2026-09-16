@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday, Barbie! 💖🎂</title>
+  <title>Happy Birthday, Barbie</title>
   
-  <!-- Fonts -->
+  <!-- Fonts: Playfair Display & Poppins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Canvas Confetti CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
@@ -45,53 +45,31 @@
   </audio>
 
   <!-- ======================================================================
-       STAGE 2: Full Birthday Celebration Experience
+       STAGE 2: Sophisticated Birthday Celebration Experience
        ====================================================================== -->
   <div id="main-stage">
     
-    <!-- Floating Soft Music Controller -->
-    <button id="music-toggle" class="music-toggle" aria-label="Toggle background music">
-      <span class="music-icon">🎵</span> <span id="music-status-text">Soft Music: Ready</span>
-    </button>
+    <!-- Floating Side Controls -->
+    <div class="side-controls">
+      <button id="music-toggle" class="side-btn music-toggle" aria-label="Toggle background music" title="Toggle Music">
+        <span class="music-icon">🎵</span> <span id="music-status-text">Music</span>
+      </button>
+      <button id="confetti-blast-btn" class="side-btn confetti-btn" aria-label="Celebrate with confetti" title="Celebrate">
+        🎉
+      </button>
+    </div>
 
     <!-- Hero Section -->
     <header class="hero-section">
-      <h1 id="bday-title" class="bday-title">Happy Birthday, Barbie!</h1>
-      <p id="bday-subtitle" class="bday-subtitle">Today is all about celebrating the most awesome person ever! 🎂✨</p>
-      
-      <div>
-        <button id="confetti-blast-btn" class="confetti-blast-btn">
-          <span>More Confetti!</span> 🎊
-        </button>
-      </div>
+      <h1 id="bday-title" class="bday-title">Happy Birthday, Barbie</h1>
+      <p id="bday-subtitle" class="bday-subtitle">Celebrating you and every cherished memory we share.</p>
     </header>
-
-    <!-- Interactive Birthday Cake & Candles -->
-    <section class="cake-section">
-      <div class="cake-card">
-        <h2 class="cake-title">Make a Wish! 🎂</h2>
-        <p class="cake-hint">Click on the candles or cake to blow them out</p>
-
-        <div id="cake-container" class="cake-container" title="Click to blow out the candles!">
-          <div class="candles-row">
-            <div class="candle"><div class="flame"></div></div>
-            <div class="candle"><div class="flame"></div></div>
-            <div class="candle"><div class="flame"></div></div>
-          </div>
-          <div class="cake-tier-top"></div>
-          <div class="cake-tier-bottom"></div>
-          <div class="cake-plate"></div>
-        </div>
-
-        <div id="blow-status" class="blow-status">Take a deep breath and blow! 🕯️</div>
-      </div>
-    </section>
 
     <!-- Memory Lane: Polaroid Wall with Click-to-Read Messages -->
     <section class="memories-section">
       <div class="section-heading">
-        <h2>Memory Lane 📸</h2>
-        <p>Click any photo to reveal the special message behind it! 💌</p>
+        <h2>Memory Lane</h2>
+        <p>A collection of moments through the years &bull; Click to read note</p>
       </div>
 
       <div id="polaroid-grid" class="polaroid-grid">
@@ -103,9 +81,9 @@
     <section class="letter-section">
       <div class="letter-envelope">
         <div class="letter-badge">💌</div>
-        <h2 id="letter-title" class="letter-title">A Special Letter for Barbie</h2>
+        <h2 id="letter-title" class="letter-title">A Special Note for Barbie</h2>
         <div class="letter-content">
-          <p id="letter-salutation" style="font-weight: 600; color: #ffd700;"></p>
+          <p id="letter-salutation" class="letter-salutation"></p>
           <div id="letter-body"></div>
           <div id="letter-signoff" class="letter-signoff"></div>
         </div>
@@ -115,20 +93,41 @@
     <!-- Interactive Balloon Pop Playground -->
     <section class="balloon-game-section">
       <div class="section-heading">
-        <h2>Pop the Balloons! 🎈</h2>
-        <p>Pop each balloon to reveal why Barbie is so special</p>
+        <h2>Moments &amp; Wishes</h2>
+        <p>Tap each floating orb to reveal a personal note</p>
       </div>
 
       <div id="balloon-area" class="balloon-play-area">
         <!-- Injected dynamically from script.js -->
       </div>
 
-      <div id="pop-toast" class="pop-toast">Click any balloon above to pop it!</div>
+      <div id="pop-toast" class="pop-toast">Select any orb above to reveal</div>
+    </section>
+
+    <!-- Interactive Birthday Cake (Moved to the Bottom as Grand Finale) -->
+    <section class="cake-section">
+      <div class="cake-card">
+        <h2 class="cake-title">Make a Wish</h2>
+        <p class="cake-hint">Click on the candles or cake to blow them out</p>
+
+        <div id="cake-container" class="cake-container" title="Click to blow out the candles">
+          <div class="candles-row">
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+            <div class="candle"><div class="flame"></div></div>
+          </div>
+          <div class="cake-tier-top"></div>
+          <div class="cake-tier-bottom"></div>
+          <div class="cake-plate"></div>
+        </div>
+
+        <div id="blow-status" class="blow-status">Take a breath and blow the candles 🕯️</div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-      <p>Crafted with lots of ❤️ for Barbie's Birthday Celebration</p>
+      <p>Crafted with warmth for Barbie's Birthday Celebration</p>
     </footer>
 
   </div>
@@ -150,7 +149,7 @@
 
         <!-- Message Side -->
         <div class="modal-text-container">
-          <div class="modal-tag">A Memory with Barbie 🌸</div>
+          <div class="modal-tag">A Memory with Barbie</div>
           <h3 class="modal-caption" id="modal-caption">Caption</h3>
           <div class="modal-divider"></div>
           <div class="modal-message-box">
@@ -161,7 +160,7 @@
           <!-- Navigation Controls -->
           <div class="modal-nav-bar">
             <button class="nav-btn" id="modal-prev-btn">‹ Previous</button>
-            <span class="nav-counter" id="modal-counter">1 of 6</span>
+            <span class="nav-counter" id="modal-counter">1 of 14</span>
             <button class="nav-btn" id="modal-next-btn">Next ›</button>
           </div>
         </div>
