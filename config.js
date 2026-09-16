@@ -28,7 +28,7 @@ const CONFIG = {
       "We’ve come a long way since that orientation day, Barbie, and I’m so lucky I get to call you my best friend. I hope we continue making memories, going on trips, discovering new music, laughing at the most random things, and being there for each other through all the different chapters of life.",
       "You deserve the world, Barbie. I hope you get everything you’ve ever wanted, and so much more. And I hope you never forget how loved, appreciated, and special you are to the people who have you in their lives.",
       "Have the best day ever, Barbie! Have lots and lots of fun, make the most of your day, and let yourself be celebrated because you deserve it. I wish I could be there to celebrate with you, I miss you.",
-      'dont forget - "Tenu pouna zidd dil di,  Mai vi vekhda kidda ni mildi"'
+      'dont forget - "Tenu pouna zidd dil di,  Mai vi vekhda kidda ni mildi 😌"'
     ],
     signoff: "Love you Barbie. Happiest birthday once again! ❤️",
     sender: "Rohan"
