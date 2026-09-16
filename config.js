@@ -27,49 +27,105 @@ const CONFIG = {
   },
 
   // Interactive Photo Memories with Click-to-Read Messages
-  // Drop your pictures in assets/images/ and update below!
+  // Loaded directly from your Pictures/ folder!
   memories: [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&auto=format&fit=crop&q=80",
+      image: "Pictures/DSCN1980.JPG",
       caption: "That unforgettable radiant smile ✨",
       date: "Cherished Moment",
       message: "Every time I see this picture, it reminds me of how naturally you bring happiness to everyone around you. Never stop smiling your genuine smile! 🌸"
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?w=800&auto=format&fit=crop&q=80",
-      caption: "Golden hour and pure vibes 🌅",
-      date: "Sunlit Day",
-      message: "One of my absolute favorite days. The conversations, the laughter, and the peace of just being in the moment. I hope this year brings us even more days like this! 💛"
+      image: "Pictures/DSCN1985.JPG",
+      caption: "Pure vibes & picture perfect 📸",
+      date: "Special Times",
+      message: "One of my absolute favorite shots. The warmth, the joy, and the good energy you carry with you everywhere you go! 💖"
     },
     {
       id: 3,
-      image: "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=800&auto=format&fit=crop&q=80",
-      caption: "Cake, wishes & celebrations 🎂",
-      date: "Party Time",
-      message: "You deserve every wish you make today to come true. Always remember how capable, strong, and deeply appreciated you are! 🍰✨"
+      image: "Pictures/IMG-20250526-WA0040.jpg",
+      caption: "Laughter in between the moments 😂",
+      date: "Unfiltered Joy",
+      message: "The candids are always the best because they show the real you — fun, spontaneous, and effortlessly wonderful! 🌟"
     },
     {
       id: 4,
-      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80",
-      caption: "Crazy laughs & endless talks 🌟",
-      date: "Best Memories",
-      message: "Having you as a friend is a true blessing. Thank you for being someone I can always count on, laugh with until my stomach hurts, and just be myself around. 💖"
+      image: "Pictures/IMG-20251123-WA0070.jpg",
+      caption: "A day to remember 💛",
+      date: "Golden Times",
+      message: "Looking back at this moment brings the biggest smile to my face. Having you around makes every day brighter! ✨"
     },
     {
       id: 5,
-      image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&auto=format&fit=crop&q=80",
-      caption: "Floating high and dreaming big 🎈",
-      date: "New Adventures",
-      message: "Here's to the incredible journey ahead. You are destined for great things, Barbie, and I can't wait to see you conquer every one of your goals! 🚀"
+      image: "Pictures/PXL_20250516_231118525.PORTRAIT.jpg",
+      caption: "Elegance and poise 👑",
+      date: "Stunning Memory",
+      message: "Truly one of a kind. Always remember how strong, graceful, and deeply appreciated you are! 💐"
     },
     {
       id: 6,
-      image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80",
-      caption: "Pure joy & magic moments ✨",
+      image: "Pictures/PXL_20250517_020808518.jpg",
+      caption: "Late nights & endless talks 🌙",
+      date: "Midnight Memories",
+      message: "The deep conversations and quiet moments are the ones that count the most. Thank you for always listening and being a true confidante! 🤝"
+    },
+    {
+      id: 7,
+      image: "Pictures/PXL_20250520_201619927.PORTRAIT.jpg",
+      caption: "Glowing as always 🌸",
+      date: "Sweet Moments",
+      message: "Your positivity is contagious. May your upcoming year glow just as bright as you do here! 🌷"
+    },
+    {
+      id: 8,
+      image: "Pictures/PXL_20251122_162536212.jpg",
+      caption: "Sunsets and good company 🌅",
+      date: "Warm Horizons",
+      message: "The peace and happiness of just enjoying the afternoon. Here's to making hundreds more memories like this! 🥂"
+    },
+    {
+      id: 9,
+      image: "Pictures/PXL_20251207_015924010.jpg",
+      caption: "Making every moment count 🌟",
+      date: "Winter Memories",
+      message: "Through every season, having you as a friend is a gift. Keep shining in everything you do! ❄️✨"
+    },
+    {
+      id: 10,
+      image: "Pictures/PXL_20260405_203720249.jpg",
+      caption: "Adventures and fun times 🎈",
+      date: "Spring Days",
+      message: "Every adventure is ten times better with you around. So grateful for all the laughs we've shared! 🚀"
+    },
+    {
+      id: 11,
+      image: "Pictures/PXL_20260405_210634777.MP.jpg",
+      caption: "Unstoppable energy ⚡",
+      date: "Happy Days",
+      message: "Never lose that spark and fiery spirit. You have the ability to make anything exciting and fun! 💖"
+    },
+    {
+      id: 12,
+      image: "Pictures/PXL_20260405_210805156.PORTRAIT.jpg",
+      caption: "Timeless portrait 🌺",
+      date: "Pure Magic",
+      message: "A portrait of someone truly special. I hope today brings you as much happiness as you give to the world! 🎂"
+    },
+    {
+      id: 13,
+      image: "Pictures/PXL_20260509_021837870.jpg",
+      caption: "Crazy moments & pure laughs 🍕",
+      date: "Late Night Fun",
+      message: "These are the moments we'll talk about for years. Never change who you are! 🥳"
+    },
+    {
+      id: 14,
+      image: "Pictures/PXL_20260519_195841736.jpg",
+      caption: "Cheers to the birthday star! 🥂",
       date: "Always & Forever",
-      message: "No matter how much time passes or how busy life gets, our bond will always remain special. Happy Birthday to the one and only Barbie! 🥂"
+      message: "No matter where life takes us, you will always be cherished and celebrated. Happy Birthday, Barbie! 🎉❤️"
     }
   ],
 
@@ -85,7 +141,7 @@ const CONFIG = {
     "Genuinely one of a kind! 🌟"
   ],
 
-  // Soft Background Music Settings
+  // Soft Background Music Settings (using local MP3 from Music/)
   music: {
     audioUrl: "Music/Gallan%204%20Karaoke.mp3",
     softVolume: 0.2, // 20% soft gentle volume
